@@ -52,3 +52,9 @@ Commercial use of original code and educational content is prohibited without pe
 ## Brand asset
 
 Use the maintainer-supplied image at `assets/brand/learnoo-logo.png` as the repository logo. Preserve the original asset. No third-party reuse rights are implied.
+
+## Maintainer pull-request workflow
+
+GitHub forbids self-approval. Requiring the sole owner to approve their own PR made maintainer changes impossible to merge. Permit only @hadden-me to bypass the approval rule through a pull request, not through direct pushes. Keep mandatory PRs, resolved conversations, force-push prevention and deletion prevention in a separate ruleset with no bypass actors.
+
+Contributor changes require the owner's approval. For owner-authored or release PRs, the owner reviews the diff and validation and explicitly merges. The platform cannot condition the owner exception on PR authorship; using it on contributor PRs is technically possible but contrary to the documented review policy. Revisit the exception when a second trusted maintainer exists. Educational author/reviewer separation remains unchanged.

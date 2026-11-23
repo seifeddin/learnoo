@@ -9,3 +9,11 @@ Before motion or 3D work read DESIGN.md, MOTION.md, requirements, architecture, 
 Never bypass server-side authorization, self-approval prevention, immutable snapshots, or transactional publication to simplify a demo. Do not select a license, invent legal agreements, claim teacher validation, or mark operational checks complete without evidence.
 
 Keep changes focused and run checks appropriate to the work. No production deployments or credentials belong in this documentation bootstrap.
+
+## Task boundaries and implementation
+
+Work on an assigned issue or explicitly requested scope. Read its dependencies and acceptance criteria before editing. If prerequisites are missing, identify them rather than silently inventing educational content, legal permissions, or completed work.
+
+The selected stack is Go for the backend and server-rendered reader, PostgreSQL for persistence, and React/TypeScript with TipTap for Studio. Begin math rendering with locally hosted browser-side KaTeX. No runnable app exists yet; add verified setup commands alongside the first runnable prototype, not speculative instructions now.
+
+Create a feature branch from develop and use pull requests. Follow CONTRIBUTING.md for maintainer exceptions. The exception for repository maintenance does not relax the application's rule that educational authors cannot approve their own lessons.

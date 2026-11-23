@@ -17,6 +17,7 @@ Learnoo will combine curriculum-aligned lessons, exercises, and educational vide
 - [Milestones and implementation backlog](docs/ROADMAP.md)
 - [Decision log](docs/DECISIONS.md)
 - [Contribution guidance](CONTRIBUTING.md)
+- Agent entry points: [AGENTS.md](AGENTS.md) for Codex and [CLAUDE.md](CLAUDE.md) for Claude Code
 - [Licensing status](docs/LICENSING.md)
 
 ## First milestone
@@ -39,7 +40,7 @@ Commercial use of the project's original code and educational content is prohibi
 
 Planning feedback and issue discussions are welcome now. Acceptance of external code and educational contributions is deferred until those terms are established. See [contribution guidance](CONTRIBUTING.md).
 
-Contributor pull requests will target `develop` and require approval from **@hadden-me**. `main` is the stable branch; `develop` is integration. Both branches are protected against unreviewed updates, force pushes, and deletion.
+Contributor pull requests will target `develop` and require approval from **@hadden-me**. `main` is the stable branch; `develop` is integration. Both branches require pull requests and block force pushes/deletion. Contributor changes require the owner’s code-owner approval; the owner has a documented PR-only review exception for their own changes. See [the workflow](CONTRIBUTING.md).
 
 ## Planning documents
 

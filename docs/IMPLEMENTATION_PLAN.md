@@ -273,7 +273,7 @@ Generated HTML is stored as a derived rendering artifact with a renderer version
 
 Rendering artifacts can be regenerated when presentation logic changes.
 
-Regeneration must not modify an immutable educational revision's source content or silently change its pinned dependencies.
+Regeneration must not modify an immutable educational revision's source content or silently change its embedded exercises or immutable media references.
 
 # 9. Student Authentication and Access
 

@@ -1074,16 +1074,12 @@ translation_groups
 lessons
 lesson_revisions
 review_events
-exercises
-exercise_revisions
-lesson_exercise_references
 media_assets
-examinations
 bookmarks
 audit_events
 ```
 
-This is a domain inventory, not the final SQL schema.
+This is a pilot domain inventory, not the final SQL schema. Exercise questions and solutions are embedded in lesson revisions. Independent exercise tables, cross-lesson exercise references, and examination collections are deferred.
 
 The actual model must include foreign keys, uniqueness constraints, revision invariants and appropriate indexes.
 
@@ -1250,7 +1246,6 @@ learnoo/
 │   ├── users/
 │   ├── curriculum/
 │   ├── lessons/
-│   ├── exercises/
 │   ├── reviews/
 │   ├── rendering/
 │   ├── media/

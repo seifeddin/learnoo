@@ -20,6 +20,12 @@ Be respectful, specific, and constructive. Discuss the work rather than attackin
 
 ## Branches and pull requests
 
+The code/content contribution workflow below applies once contributor terms are finalized; those submissions are not yet accepted. Planning discussions are welcome now.
+
 Fork this repository and create a feature branch from `develop`. Open a pull request targeting `develop`; explain the change and validation. Do not request direct pushes to `main` or `develop`. The sole code owner is @hadden-me; their approval is required for contributor changes. Release pull requests go from `develop` to `main`.
 
-GitHub does not allow authors to approve their own pull requests. Maintainer-authored changes need a separately documented workflow; do not silently add an approval bypass. Branch rules must be configured on GitHub in addition to CODEOWNERS.
+GitHub does not allow authors to approve their own pull requests. The repository owner, @hadden-me, has a pull-request-only review exception for maintainer-authored changes and release PRs. They must open a PR, inspect the diff and validation, and merge through that PR. Contributor PRs should receive their explicit approving review before merge.
+
+The exception is scoped to the owner account, not all future admins. GitHub cannot limit this exception to owner-authored PRs: the owner could also bypass review on other PRs, so the preceding rule is maintainer policy. All other actors still require the owner's code-owner approval. Separate rules retain mandatory PRs, conversation resolution, and blocks on force pushes/deletion without bypasses. Direct pushes to main/develop remain disallowed.
+
+See [the decision log](docs/DECISIONS.md) for the recorded rationale. This repository exception does not permit self-approval of educational lessons inside Learnoo.

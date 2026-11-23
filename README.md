@@ -34,7 +34,7 @@ Dependencies and runtime versions have not been selected or installed. Setup ins
 
 ## Scope and licensing
 
-The initial pilot covers one BAC section and one subject. The section, subject, author, and independent reviewer remain to be selected.
+The initial pilot is **Tunisian BAC Mathematics section → mathematics**. Teachers have expressed interest, but no author or independent reviewer is confirmed. The first chapter and lesson remain to be selected; technical fixtures must be labeled unreviewed.
 
 Commercial use of the project's original code and educational content is prohibited without permission, including use by commercial educational institutions. See the [rights notice](LICENSE.md). A complete reuse license and contributor terms are pending; this is not an open-source license.
 

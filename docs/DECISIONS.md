@@ -9,14 +9,14 @@ Baseline: PROJECT_PLAN.md and IMPLEMENTATION_PLAN.md. Updated 2026-11-23. This f
 - YouTube video delivery; responsive web before native apps.
 - Human review, two distinct author/reviewer people, separate publishing permission.
 - Immutable submitted lesson snapshots including exercises, immutable media, transactional publication, audited withdrawal/restoration.
-- One section and one subject for the pilot; invited internal users first.
+- Pilot: Tunisian BAC Mathematics section, mathematics subject; invited internal users first.
 - GitHub for developers; Studio for teachers.
 
 ## Open decisions
 
 | Decision | Responsible role (person unassigned unless noted) | Needed by |
 | --- | --- | --- |
-| First BAC section, subject, real lesson | Maintainer + teacher | Content experiment |
+| First mathematics chapter and lesson | Maintainer + teacher | Content fixture |
 | Author and independent reviewer | Maintainer | Internal educational MVP |
 | Go vs JS canonical renderer; math rendering details | Implementer + maintainer | End of content experiment |
 | Exact content schema and SQL migrations | Implementer | Relevant workflow implementation |
@@ -58,3 +58,9 @@ Use the maintainer-supplied image at `assets/brand/learnoo-logo.png` as the repo
 GitHub forbids self-approval. Requiring the sole owner to approve their own PR made maintainer changes impossible to merge. Permit only @hadden-me to bypass the approval rule through a pull request, not through direct pushes. Keep mandatory PRs, resolved conversations, force-push prevention and deletion prevention in a separate ruleset with no bypass actors.
 
 Contributor changes require the owner's approval. For owner-authored or release PRs, the owner reviews the diff and validation and explicitly merges. The platform cannot condition the owner exception on PR authorship; using it on contributor PRs is technically possible but contrary to the documented review policy. Revisit the exception when a second trusted maintainer exists. Educational author/reviewer separation remains unchanged.
+
+## Mathematics pilot and teacher participation
+
+The maintainer selected the BAC Mathematics section and mathematics subject. Teachers have expressed interest, but none is formally assigned as author or independent reviewer. Do not name or credit a confirmed teaching team yet.
+
+The renderer experiment may use a clearly labeled, unreviewed handwritten JSON fixture from LRN-001 without waiting for TipTap (LRN-003) or final educational approval. LRN-003 must later verify that editor output matches the same schema and fixture. A reviewed educational pilot still requires a confirmed author and separate qualified reviewer. The first chapter remains undecided.

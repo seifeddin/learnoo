@@ -2,7 +2,7 @@
 
 ## Mission and initial scope
 
-Provide free, trustworthy Tunisian BAC learning materials maintained by volunteers. Pilot one section, one subject, and a coherent chapter; target 10–20 human-reviewed lessons for the educational pilot, not for the first editor experiment.
+Provide free, trustworthy Tunisian BAC learning materials maintained by volunteers. Pilot the BAC Mathematics section, mathematics subject, and a coherent chapter (chapter selection pending); target 10–20 human-reviewed lessons for the educational pilot, not for the first editor experiment.
 
 ## Required experience
 

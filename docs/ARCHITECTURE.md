@@ -25,10 +25,14 @@ No microservices, Kubernetes, Redis, or external search engine for the initial r
 
 ## Planned layout
 
-`cmd/server`, `internal/{auth,users,curriculum,lessons,exercises,reviews,rendering,media,search,web}`, `web/{templates,static,studio}`, `migrations`, `deploy`.
+`cmd/server`, `internal/{auth,users,curriculum,lessons,reviews,rendering,media,search,web}`, `web/{templates,static,studio}`, `migrations`, `deploy`.
 
 Create directories when implementation needs them. Do not build an empty framework of speculative modules.
 
 ## Operations
 
 The shared server's capacity is reported, not measured for Learnoo. Check peak load, disk capacity/I/O, memory, and concurrent use. Use resource limits, persistent storage, internal-only database access, off-site database/media backups, restoration tests, monitoring, application rollback, and a migration recovery strategy. Never commit secrets or deployment credentials.
+
+## Current experiment
+
+`cmd/renderer` is a separate loopback-only executable for LRN-004. It embeds restricted lesson fixtures and uses the same `internal/rendering.Render` function for reader and preview. It is not a production server and does not claim authentication or editorial safeguards. See [development instructions](DEVELOPMENT.md) and [experiment results](RENDERER_EXPERIMENT.md).

@@ -1,0 +1,20 @@
+{{define "page"}}<!doctype html>
+<html lang="{{.Language}}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>{{.Title}} · Learnoo</title><link rel="stylesheet" href="/static/site.css"><link rel="stylesheet" href="/static/vendor/katex/katex.min.css"><script defer src="/static/vendor/katex/katex.min.js"></script><script defer src="/static/math.js"></script></head>
+<body><a class="skip" href="#lesson">Aller au contenu</a><header><a class="brand" href="/">LEARNOO<span>Apprendre ensemble.</span></a><nav aria-label="Navigation du prototype"><a href="/lesson">Leçon</a><a href="/bidi">Test RTL</a><a href="/lab">Laboratoire JSON</a></nav></header>
+<div class="notice" role="note">PROTOTYPE LOCAL · Contenu non relu par un enseignant. Ce document ne constitue pas un cours validé.</div>
+<main id="lesson"><div class="eyebrow">BAC MATHÉMATIQUES <span>/</span> MATHÉMATIQUES</div><h1>{{.Title}}</h1><p class="objective">{{.Objective}}</p><div class="meta"><span>Exemple technique</span><span>Lecture sans vidéo</span><span>Validation pédagogique en attente</span></div><article aria-label="Contenu de la leçon">{{range .Blocks}}{{template "node" .}}{{end}}</article><footer>Auteur et relecteur pédagogique : non assignés. Aucun contenu n’est publié comme approuvé.</footer></main></body></html>{{end}}
+{{define "node"}}
+{{if eq .Type "paragraph"}}<p lang="{{.Lang}}" dir="{{.Dir}}">{{range .Children}}{{template "node" .}}{{end}}</p>
+{{else if eq .Type "heading"}}<h2 lang="{{.Lang}}" dir="{{.Dir}}">{{range .Children}}{{template "node" .}}{{end}}</h2>
+{{else if eq .Type "text"}}<bdi lang="{{.Lang}}" dir="{{.Dir}}">{{.Text}}</bdi>
+{{else if eq .Type "strong"}}<strong>{{range .Children}}{{template "node" .}}{{end}}</strong>
+{{else if eq .Type "math"}}<span class="math" dir="ltr" data-display="false">{{.Text}}</span>
+{{else if eq .Type "displayMath"}}<div class="formula"><div class="math" dir="ltr" data-display="true">{{.Text}}</div></div>
+{{else if eq .Type "list"}}<ul>{{range .Children}}{{template "node" .}}{{end}}</ul>
+{{else if eq .Type "item"}}<li>{{range .Children}}{{template "node" .}}{{end}}</li>
+{{else if eq .Type "callout"}}<section class="callout"><h3>{{.Title}}</h3>{{range .Children}}{{template "node" .}}{{end}}</section>
+{{else if eq .Type "exercise"}}<section class="exercise"><span class="eyebrow">À VOUS DE JOUER</span><h2>{{.Title}}</h2>{{range .Children}}{{template "node" .}}{{end}}</section>
+{{else if eq .Type "solution"}}<details><summary>Voir la solution expliquée</summary>{{range .Children}}{{template "node" .}}{{end}}</details>
+{{else if eq .Type "image"}}<figure><img src="{{.Src}}" alt="{{.Alt}}" width="640" height="360" loading="lazy"><figcaption>{{.Alt}}</figcaption></figure>
+{{else if eq .Type "youtube"}}<section class="video"><h3>{{.Title}}</h3>{{if .VideoID}}<button type="button" class="video-load" data-video-id="{{.VideoID}}">Charger la vidéo YouTube</button><p>La vidéo ne se charge qu’après votre choix.</p>{{else}}<p>Vidéo à sélectionner avec un enseignant. La leçon reste lisible sans vidéo.</p>{{end}}</section>{{end}}
+{{end}}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "title": "اختبار اتجاه الكتابة — fixture technique",
+  "language": "ar",
+  "status": "unreviewed",
+  "objective": "اختبار تقني للعرض فقط، موش درس مصادق عليه.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "lang": "ar",
+      "dir": "rtl",
+      "children": [
+        {
+          "type": "text",
+          "text": "نكتب العدد المركّب "
+        },
+        {
+          "type": "math",
+          "text": "z=3+2i"
+        },
+        {
+          "type": "text",
+          "text": " ونسمّيو "
+        },
+        {
+          "type": "text",
+          "text": "partie réelle",
+          "lang": "fr",
+          "dir": "ltr"
+        },
+        {
+          "type": "text",
+          "text": " الجزء الحقيقي."
+        }
+      ]
+    },
+    {
+      "type": "displayMath",
+      "text": "|z|=\\sqrt{13}"
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "text": "Phrase française avec "
+        },
+        {
+          "type": "text",
+          "text": "ملاحظة بالعربية",
+          "lang": "ar",
+          "dir": "rtl"
+        },
+        {
+          "type": "text",
+          "text": " et "
+        },
+        {
+          "type": "math",
+          "text": "z\\in\\mathbb{C}"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "lang": "ar",
+      "dir": "rtl",
+      "children": [
+        {
+          "type": "text",
+          "text": "الأعداد وعلامات الترقيم: 2026، "
+        },
+        {
+          "type": "math",
+          "text": "a=-1"
+        },
+        {
+          "type": "text",
+          "text": "، ثمّ "
+        },
+        {
+          "type": "math",
+          "text": "b=2"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "displayMath",
+      "text": "\\left|\\frac{(1+i)^2}{2-i}\\right|=\\frac{2}{\\sqrt{5}}"
+    }
+  ]
+}

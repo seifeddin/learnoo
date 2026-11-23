@@ -23,3 +23,8 @@ coverage/
 .DS_Store
 .idea/
 .vscode/
+
+# Reproducible browser assets and test artifacts
+internal/rendering/static/vendor/
+playwright-report/
+test-results/

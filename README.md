@@ -1,15 +1,18 @@
 # Learnoo
 
-<p align="center"><img src="assets/brand/learnoo-logo.png" alt="Learnoo logo: a smiling student learning from books" width="320"></p>
+<p align="center"><img src="assets/brand/learnoo-banner.png" alt="Learnoo channel banner with its multicolour infinity mark" width="780"></p>
 
 Free, community-driven learning for Tunisian Baccalauréat students.
 
+[YouTube channel](https://www.youtube.com/@learnoo5344)
+
 Learnoo will combine curriculum-aligned lessons, exercises, and educational videos with a native teacher contribution and review workflow. Students will access learning materials through free accounts. Teachers will contribute through Learnoo Studio; developers will collaborate here.
 
-**Status:** documentation and technical prototype preparation. There is no working application or deployment yet.
+**Status:** a local Go + KaTeX renderer experiment is available. It is not the deployed learning platform; authentication, editorial publishing, and database persistence are not implemented. All sample lessons are unreviewed.
 
 ## Start here
 
+- [Run and test the local prototype](docs/DEVELOPMENT.md)
 - [Project requirements](docs/REQUIREMENTS.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Content and editorial rules](docs/CONTENT_AND_EDITORIAL.md)
@@ -30,7 +33,7 @@ Next, implement the author → reviewer/publisher → student workflow with real
 
 Go modular monolith · PostgreSQL · server-rendered learning pages · React/TypeScript/TipTap Studio · Docker Compose · YouTube video hosting.
 
-Dependencies and runtime versions have not been selected or installed. Setup instructions will accompany the first runnable prototype.
+The experiment uses Go 1.25+, KaTeX 0.19.1 and Playwright 1.65.1; see [development instructions](docs/DEVELOPMENT.md). React/TipTap and PostgreSQL are planned for later milestones.
 
 ## Scope and licensing
 
@@ -47,3 +50,9 @@ Contributor pull requests will target `develop` and require approval from **@had
 The [project plan](docs/PROJECT_PLAN.md) describes the product and long-term direction. The [implementation plan](docs/IMPLEMENTATION_PLAN.md) defines the current prototype scope and takes precedence where it narrows the broader plan. Working guides summarize these documents; unresolved decisions live in the decision log.
 
 Update these files in place as decisions evolve. Git records their history; filenames do not carry release numbers.
+
+## Communication drafts
+
+- [Tunisian-dialect Facebook post](docs/communications/facebook-post-tn.md) — draft, not posted.
+- [Homepage concept](docs/design/homepage-concept.png) — generated proposed design, not a live-site screenshot.
+- [Renderer experiment results](docs/RENDERER_EXPERIMENT.md).

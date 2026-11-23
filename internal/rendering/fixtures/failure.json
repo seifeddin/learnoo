@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "title": "Échec contrôlé — test technique",
+  "language": "fr",
+  "status": "unreviewed",
+  "objective": "Une formule invalide doit rester lisible sans exécuter du HTML.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "text": "Formule volontairement invalide :"
+        }
+      ]
+    },
+    {
+      "type": "displayMath",
+      "text": "\\frac{1}{"
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "text": "Texte après l’erreur : le reste du document doit rester accessible."
+        }
+      ]
+    }
+  ]
+}

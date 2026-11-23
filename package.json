@@ -1,0 +1,7 @@
+{
+  "name": "learnoo-renderer-prototype",
+  "private": true,
+  "scripts": {"assets": "node scripts/copy-katex.mjs", "test:browser": "playwright test"},
+  "dependencies": {"katex": "0.19.1"},
+  "devDependencies": {"@playwright/test": "1.65.1"}
+}

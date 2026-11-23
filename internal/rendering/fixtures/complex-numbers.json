@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "title": "Nombres complexes : lire une forme algébrique",
+  "language": "fr",
+  "status": "unreviewed",
+  "objective": "Reconnaître la partie réelle et la partie imaginaire, puis calculer un module sur un exemple simple.",
+  "blocks": [
+    {
+      "type": "heading",
+      "children": [
+        {
+          "type": "text",
+          "text": "01. Deux réels, un nombre complexe"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "text": "Un nombre complexe s’écrit "
+        },
+        {
+          "type": "math",
+          "text": "z=a+bi"
+        },
+        {
+          "type": "text",
+          "text": ", où "
+        },
+        {
+          "type": "math",
+          "text": "a,b\\in\\mathbb{R}"
+        },
+        {
+          "type": "text",
+          "text": " et "
+        },
+        {
+          "type": "math",
+          "text": "i^2=-1"
+        },
+        {
+          "type": "text",
+          "text": ". On appelle a sa partie réelle et b sa partie imaginaire."
+        }
+      ]
+    },
+    {
+      "type": "displayMath",
+      "text": "\\operatorname{Re}(z)=a \\qquad \\operatorname{Im}(z)=b"
+    },
+    {
+      "type": "callout",
+      "title": "Attention à la notation",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "La partie imaginaire de "
+            },
+            {
+              "type": "math",
+              "text": "3+2i"
+            },
+            {
+              "type": "text",
+              "text": " est "
+            },
+            {
+              "type": "math",
+              "text": "2"
+            },
+            {
+              "type": "text",
+              "text": ", et non "
+            },
+            {
+              "type": "math",
+              "text": "2i"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "children": [
+        {
+          "type": "text",
+          "text": "02. Situer le point dans le plan"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "text": "Au nombre "
+        },
+        {
+          "type": "math",
+          "text": "z=3+2i"
+        },
+        {
+          "type": "text",
+          "text": ", on associe le point "
+        },
+        {
+          "type": "math",
+          "text": "M(3;2)"
+        },
+        {
+          "type": "text",
+          "text": ". Le module est la distance entre l’origine et ce point."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/static/complex-plane.svg",
+      "alt": "M(3 ; 2) dans le plan complexe. Le segment OM a pour longueur √13."
+    },
+    {
+      "type": "displayMath",
+      "text": "|z|=\\sqrt{a^2+b^2}"
+    },
+    {
+      "type": "callout",
+      "title": "Exemple expliqué",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Pour "
+            },
+            {
+              "type": "math",
+              "text": "z=3+2i"
+            },
+            {
+              "type": "text",
+              "text": ", le théorème de Pythagore donne :"
+            }
+          ]
+        },
+        {
+          "type": "displayMath",
+          "text": "|3+2i|=\\sqrt{3^2+2^2}=\\sqrt{13}"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Le module est un réel positif ou nul. Il vaut zéro uniquement lorsque "
+            },
+            {
+              "type": "math",
+              "text": "z=0"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "children": [
+        {
+          "type": "item",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Repérer les deux coefficients réels a et b."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Calculer a² + b², puis prendre la racine carrée positive."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "title": "À partir de z = −1 + i",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Donner la partie réelle, la partie imaginaire et le module de "
+            },
+            {
+              "type": "math",
+              "text": "z=-1+i"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ]
+        },
+        {
+          "type": "solution",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "On lit "
+                },
+                {
+                  "type": "math",
+                  "text": "a=-1"
+                },
+                {
+                  "type": "text",
+                  "text": " et "
+                },
+                {
+                  "type": "math",
+                  "text": "b=1"
+                },
+                {
+                  "type": "text",
+                  "text": "."
+                }
+              ]
+            },
+            {
+              "type": "displayMath",
+              "text": "\\operatorname{Re}(z)=-1\\quad\\operatorname{Im}(z)=1"
+            },
+            {
+              "type": "displayMath",
+              "text": "|z|=\\sqrt{(-1)^2+1^2}=\\sqrt{2}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "youtube",
+      "title": "Pour aller plus loin"
+    }
+  ]
+}

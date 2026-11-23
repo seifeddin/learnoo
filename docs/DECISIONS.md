@@ -51,7 +51,7 @@ Commercial use of original code and educational content is prohibited without pe
 
 ## Brand asset
 
-Use the maintainer-supplied image at `assets/brand/learnoo-logo.png` as the repository logo. Preserve the original asset. No third-party reuse rights are implied.
+Use the corrected maintainer-supplied YouTube banner at `assets/brand/learnoo-banner.png`. The multicolour infinity mark is the logo reference; the previous cartoon is superseded. Channel: https://www.youtube.com/@learnoo5344. Preserve the supplied banner; no third-party reuse rights or verification of its historical promotional claims are implied.
 
 ## Maintainer pull-request workflow
 
@@ -64,3 +64,9 @@ Contributor changes require the owner's approval. For owner-authored or release 
 The maintainer selected the BAC Mathematics section and mathematics subject. Teachers have expressed interest, but none is formally assigned as author or independent reviewer. Do not name or credit a confirmed teaching team yet.
 
 The renderer experiment may use a clearly labeled, unreviewed handwritten JSON fixture from LRN-001 without waiting for TipTap (LRN-003) or final educational approval. LRN-003 must later verify that editor output matches the same schema and fixture. A reviewed educational pilot still requires a confirmed author and separate qualified reviewer. The first chapter remains undecided.
+
+## Renderer experiment fixture
+
+Use complex numbers (algebraic form and modulus) provisionally for the technical test. The sample is French; intentionally mixed Arabic/French content lives in a separate RTL fixture. This does not select the first published chapter or claim teacher approval. The initial video slot has no chosen video.
+
+The prototype schema is a small typed JSON format; TipTap compatibility remains to be implemented and tested in LRN-003. The initial program is bound to loopback and is not the authenticated learning platform.

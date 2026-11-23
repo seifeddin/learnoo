@@ -14,6 +14,6 @@ Keep changes focused and run checks appropriate to the work. No production deplo
 
 Work on an assigned issue or explicitly requested scope. Read its dependencies and acceptance criteria before editing. If prerequisites are missing, identify them rather than silently inventing educational content, legal permissions, or completed work.
 
-The selected stack is Go for the backend and server-rendered reader, PostgreSQL for persistence, and React/TypeScript with TipTap for Studio. Begin math rendering with locally hosted browser-side KaTeX. No runnable app exists yet; add verified setup commands alongside the first runnable prototype, not speculative instructions now.
+The selected stack is Go for the backend and server-rendered reader, PostgreSQL for persistence, and React/TypeScript with TipTap for Studio. Begin math rendering with locally hosted browser-side KaTeX. A local renderer experiment exists; read docs/DEVELOPMENT.md for verified setup and test commands. It is not the authenticated application. Do not expose the experiment publicly.
 
 Create a feature branch from develop and use pull requests. Follow CONTRIBUTING.md for maintainer exceptions. The exception for repository maintenance does not relax the application's rule that educational authors cannot approve their own lessons.

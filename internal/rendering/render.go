@@ -4,6 +4,7 @@ package rendering
 import (
 	"bytes"
 	"embed"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -54,7 +55,40 @@ func Decode(r io.Reader) (Document, error) {
 	if err := strictjson.Unmarshal(data, &doc); err != nil {
 		return Document{}, fmt.Errorf("invalid JSON: %w", err)
 	}
+	if err := checkLiterals(data); err != nil {
+		return Document{}, fmt.Errorf("invalid JSON: %w", err)
+	}
 	return doc, Validate(doc)
+}
+
+// plainInteger is the only number spelling the schema accepts. The Studio
+// checks the same rule (web/studio/src/schema/lesson.ts, checkLiterals).
+var plainInteger = regexp.MustCompile(`^-?(0|[1-9][0-9]*)$`)
+
+// checkLiterals rejects null anywhere and any number not written as a plain
+// integer. encoding/json treats null as absent and the Studio's JSON.parse
+// reads 1.0 or 1e0 as 1; refusing both keeps the two validators in agreement.
+// data must already be valid JSON.
+func checkLiterals(data []byte) error {
+	dec := json.NewDecoder(bytes.NewReader(data))
+	dec.UseNumber()
+	for {
+		tok, err := dec.Token()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		switch v := tok.(type) {
+		case nil:
+			return errors.New("null is not allowed")
+		case json.Number:
+			if !plainInteger.MatchString(string(v)) {
+				return fmt.Errorf("number %s must be a plain integer", v)
+			}
+		}
+	}
 }
 
 func Validate(doc Document) error {

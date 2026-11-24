@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LRN-002 · Tableau de bord (wireframe)</title>
+<link rel="stylesheet" href="../../../web/design/tokens.css">
+<link rel="stylesheet" href="wireframes.css">
+</head>
+<body>
+<a class="skip" href="#doc-main">Aller au contenu du document</a>
+<div class="doc">
+<header>
+  <nav class="crumbs" aria-label="Wireframes"><a href="index.html">Index des wireframes</a><a href="README.md">Notes (README)</a></nav>
+  <h1>Flow 5 — Dashboard with bookmarks, and role-based entry points</h1>
+  <p class="notice"><strong>Wireframe, not production UI.</strong> The MVP has bookmarks but <strong>no progress tracking</strong> (IMPLEMENTATION_PLAN "Student benefit"), so there is no "continue where you left off", streak or percentage. Lesson titles in brackets are placeholders, not a chosen chapter.</p>
+  <p class="lede">Covers: student dashboard, empty bookmarks, unavailable bookmarked lesson, search with no results, Arabic interface, desktop, and the extra entries Teacher / Reviewer / Admin see.</p>
+</header>
+<main id="doc-main">
+
+<h2 id="student">5.1 Mobile — student</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · Tab order follows the numbers</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui">
+      <div class="ui-bar"><span class="n" aria-hidden="true">1</span><a class="ui-logo" href="#student">LEARNOO</a><span class="grow"></span><span class="n" aria-hidden="true">2</span><button class="btn icon quiet" type="button" aria-expanded="false" aria-label="Menu">☰</button></div>
+      <div class="ui-body">
+        <h1 class="lesson-title">Bonjour [Prénom]</h1>
+        <form role="search" onsubmit="return false" class="field">
+          <label for="d1-q"><span class="n" aria-hidden="true">3</span> Rechercher une leçon</label>
+          <input id="d1-q" type="search" placeholder="Titre de leçon">
+        </form>
+        <section aria-labelledby="d1-bm">
+          <h2 id="d1-bm" style="font-size:1.125rem;margin-bottom:.5rem"><span class="n" aria-hidden="true">4</span> Mes signets (3)</h2>
+          <ul style="list-style:none;padding:0;margin:0">
+            <li class="card row">
+              <div class="grow"><a href="reader.html#mobile-fr"><strong>Forme algébrique d’un nombre complexe</strong></a><br><span class="caption">Mathématiques › Nombres complexes</span></div>
+              <button class="btn icon quiet" type="button" aria-label="Retirer « Forme algébrique d’un nombre complexe » des signets">✕</button>
+            </li>
+            <li class="card row">
+              <div class="grow"><a href="reader.html#mobile-fr"><strong>[Titre de leçon]</strong></a><br><span class="caption">Mathématiques › [Chapitre]</span></div>
+              <button class="btn icon quiet" type="button" aria-label="Retirer « [Titre de leçon] » des signets">✕</button>
+            </li>
+            <li class="card row">
+              <div class="grow"><strong class="muted">[Titre de leçon]</strong><br><span class="caption">Indisponible pour le moment</span></div>
+              <button class="btn icon quiet" type="button" aria-label="Retirer « [Titre de leçon] » des signets">✕</button>
+            </li>
+          </ul>
+        </section>
+        <section aria-labelledby="d1-br">
+          <h2 id="d1-br" style="font-size:1.125rem;margin-bottom:.5rem"><span class="n" aria-hidden="true">5</span> Parcourir</h2>
+          <div class="field"><label for="d1-sec">Section du BAC</label><select id="d1-sec"><option>Mathématiques</option></select></div>
+          <ul class="small" style="padding-inline-start:1.2rem">
+            <li><a href="#student">Mathématiques</a> — <a href="#student">Nombres complexes</a>, <a href="#student">[Chapitre]</a></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>Annotations</h3>
+    <ol>
+      <li><span class="n">1–2</span><span>Same header as the reader. The menu holds browse, language switch, account and sign out.</span></li>
+      <li><span class="n">3</span><span>Title search, accent-insensitive. Results open a page (5.3); no type-ahead required for MVP.</span></li>
+      <li><span class="n">4</span><span>Bookmarks, newest first. Each row: one link (title) and one remove button whose accessible name includes the title. Removing shows "Signet retiré" with an "Annuler" action in a polite live region, and focus moves to the next row.</span></li>
+      <li><span class="n">5</span><span>Browse section → subject → chapter. The section filter defaults to the student's optional registration choice.</span></li>
+    </ol>
+    <p class="small">Unavailable bookmarks (unpublished or withdrawn) stay listed, without link, with a written state — never colour alone. The bookmark targets the stable lesson identity and comes back if the lesson is republished.</p>
+  </div>
+</div>
+
+<h2 id="empty">5.2–5.3 Empty and no-result states</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>5.2 No bookmarks yet</strong></figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <h2 style="font-size:1.125rem;margin-top:0">Mes signets</h2>
+        <p>Vous n’avez pas encore enregistré de leçon.</p>
+        <p class="small muted">Dans une leçon, utilisez « ☆ Enregistrer » pour la retrouver ici.</p>
+        <a class="btn block" href="#student">Parcourir les chapitres</a>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>5.3 Search without results</strong></figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <form role="search" onsubmit="return false" class="field"><label for="d3-q">Rechercher une leçon</label><input id="d3-q" type="search" value="intégrale"></form>
+        <p role="status"><strong>Aucune leçon trouvée pour « intégrale ».</strong></p>
+        <p class="small muted">Seuls les titres des leçons publiées sont recherchés. Essayez un autre mot ou parcourez les chapitres.</p>
+        <a class="btn block" href="#student">Parcourir les chapitres</a>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>Catalogue still empty</strong> (pilot, before the first publication)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <h2 style="font-size:1.125rem;margin-top:0">Parcourir</h2>
+        <p>Aucune leçon n’est encore publiée dans cette section.</p>
+        <p class="small muted">Les leçons apparaissent ici après relecture par un enseignant.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+</div>
+
+<h2 id="rtl">5.4 Arabic interface</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · UI in Arabic; lesson titles stay French</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short" lang="ar" dir="rtl">
+      <div class="ui-bar"><a class="ui-logo" href="#rtl" lang="en" dir="ltr">LEARNOO</a><span class="grow"></span><button class="btn icon quiet" type="button" aria-label="القائمة">☰</button></div>
+      <div class="ui-body">
+        <form role="search" onsubmit="return false" class="field"><label for="d4-q">البحث عن درس</label><input id="d4-q" type="search" dir="auto"></form>
+        <h2 style="font-size:1.125rem">الدروس المحفوظة</h2>
+        <ul style="list-style:none;padding:0;margin:0">
+          <li class="card row">
+            <div class="grow"><a href="reader.html#mobile-ar" lang="fr" dir="ltr"><strong>Forme algébrique d’un nombre complexe</strong></a><br><span class="caption" lang="fr" dir="ltr">Mathématiques › Nombres complexes</span></div>
+            <button class="btn icon quiet" type="button" aria-label="إزالة من المحفوظات">✕</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>Each French title is its own <code>lang="fr" dir="ltr"</code> element, so it aligns as a unit inside the RTL card; the remove button sits on the inline end (left).</li>
+      <li>Search input uses <code>dir="auto"</code> because students may type French or Arabic.</li>
+      <li><span class="proposed">Unverified</span> Arabic labels are placeholders pending native review.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="desktop">5.5 Desktop — student</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1024+</strong> · bookmarks and browse side by side; DOM order = bookmarks then browse</figcaption>
+    <div class="frame-scroll">
+    <div class="screen desktop ui short">
+      <div class="ui-bar">
+        <a class="ui-logo" href="#desktop">LEARNOO</a>
+        <div class="field grow" style="margin:0;max-width:24rem"><input type="search" placeholder="Rechercher une leçon" aria-label="Rechercher une leçon"></div>
+        <span class="grow"></span>
+        <button class="btn quiet" type="button" aria-haspopup="menu">Compte ▾</button>
+      </div>
+      <div class="ui-body wide" style="display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:2rem">
+        <section><h1 class="lesson-title" style="margin-top:0">Mes signets</h1>
+          <div class="card"><a href="reader.html#desktop"><strong>Forme algébrique d’un nombre complexe</strong></a> <span class="caption">· Nombres complexes</span></div>
+          <div class="card"><a href="reader.html#desktop"><strong>[Titre de leçon]</strong></a> <span class="caption">· [Chapitre]</span></div>
+        </section>
+        <section class="panel"><h2 style="font-size:1.125rem;margin-top:0">Parcourir</h2><p class="small"><a href="#desktop">Mathématiques</a> › <a href="#desktop">Nombres complexes</a></p></section>
+      </div>
+    </div>
+    </div>
+  </figure>
+</div>
+
+<h2 id="roles">5.6 Role-based entry points</h2>
+<p class="small">The same dashboard shell gains entries only when the server reports the corresponding permission. Labels follow the confirmed account types; each entry is gated by the existing independent permission shown in brackets.</p>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>Menu contents by account</strong></figcaption>
+    <div class="table-scroll" style="max-width:40rem">
+    <table class="matrix">
+      <thead><tr><th>Menu entry</th><th>Student</th><th>Teacher</th><th>Teacher + Reviewer</th><th>Admin</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Mes signets, Parcourir, Rechercher</th><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+        <tr><th scope="row">Studio — Mes leçons [<code>author</code>]</th><td>—</td><td>✓</td><td>✓</td><td>✓</td></tr>
+        <tr><th scope="row">À relire (n) [<code>reviewer</code> per subject]</th><td>—</td><td>—</td><td>✓ own subjects</td><td>only with a subject assignment</td></tr>
+        <tr><th scope="row">À publier (n) [<code>publisher</code>]</th><td>—</td><td>if granted</td><td>if granted</td><td>✓</td></tr>
+        <tr><th scope="row">Administration [<code>administrator</code>]</th><td>—</td><td>—</td><td>—</td><td>M2 (LRN-019); M1 uses the CLI</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </figure>
+  <figure class="frame" id="teacher">
+    <figcaption><strong>Teacher view — Mes leçons</strong> (360)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui">
+      <div class="ui-bar"><a class="ui-logo" href="#teacher">LEARNOO Studio</a><span class="grow"></span><a class="btn primary" href="editor.html#draft">Nouvelle leçon</a></div>
+      <div class="ui-body">
+        <h1 class="lesson-title">Mes leçons</h1>
+        <ul style="list-style:none;padding:0;margin:0">
+          <li class="card"><a href="editor.html#changes"><strong>Forme algébrique d’un nombre complexe</strong></a><br><span class="status changes">Modifications demandées</span> <span class="caption">rév. 2 · action requise</span></li>
+          <li class="card"><a href="editor.html#submitted"><strong>[Titre de leçon]</strong></a><br><span class="status review">En relecture</span> <span class="caption">rév. 1</span></li>
+          <li class="card"><a href="editor.html#draft"><strong>[Titre de leçon]</strong></a><br><span class="status draft">Brouillon</span> <span class="caption">modifié hier</span></li>
+          <li class="card"><a href="review.html#publish"><strong>[Titre de leçon]</strong></a><br><span class="status approved">Approuvée</span> <span class="caption">en attente de publication</span></li>
+          <li class="card"><a href="reader.html#mobile-fr"><strong>[Titre de leçon]</strong></a><br><span class="status approved">Publiée</span> <span class="caption">rév. 1 en ligne</span></li>
+        </ul>
+        <p class="small muted">Empty: « Vous n’avez pas encore de leçon. » + « Nouvelle leçon ».</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>Items needing the teacher's action ("Modifications demandées") sort first.</li>
+      <li>Every status is written text; colour is supplementary.</li>
+      <li>Richer teacher dashboards are LRN-017 (M2); this is the minimum list needed for M1.</li>
+      <li>"Nouvelle leçon" asks for section/subject/chapter from the catalogue first. A teacher may write for any existing chapter; proposing new chapters is out of scope here.</li>
+    </ul>
+  </div>
+</div>
+
+</main>
+</div>
+</body>
+</html>

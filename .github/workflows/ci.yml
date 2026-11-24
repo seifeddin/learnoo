@@ -1,0 +1,122 @@
+# LRN-012: run the existing verification suite on pull requests.
+# Security: uses `pull_request` (never `pull_request_target`), read-only token,
+# no secrets, and does not persist checkout credentials. Fork PRs run unprivileged.
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      LEARNOO_TEST_PORT: "18080"
+      # Database-backed Go tests (LRN-005). REQUIRE makes them fail, not skip,
+      # if the database is unavailable. Disposable CI-only service; no secret.
+      LEARNOO_TEST_DATABASE_URL: postgres://learnoo@127.0.0.1:5432/learnoo_test?sslmode=disable
+      LEARNOO_REQUIRE_DB_TESTS: "1"
+    services:
+      postgres:
+        image: postgres:16.13
+        env:
+          POSTGRES_USER: learnoo
+          POSTGRES_DB: learnoo_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U learnoo -d learnoo_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: No AI attribution in commits
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: scripts/check-attribution.sh "$BASE_SHA" "$HEAD_SHA"
+
+      - name: Set up Go
+        uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version: "1.25.x"
+          cache: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            web/studio/package-lock.json
+
+      - name: Install locked npm dependencies
+        run: npm ci --ignore-scripts
+
+      # Must run before `npm run assets`, which regenerates the design files
+      # and would hide generated CSS that was not committed.
+      - name: Design tokens are up to date
+        run: npm run design:check
+
+      - name: Generate embedded assets
+        run: npm run assets
+
+      - name: Design contrast
+        run: npm run design:contrast
+
+      - name: Install locked Studio dependencies
+        working-directory: web/studio
+        run: npm ci --ignore-scripts
+
+      - name: Studio typecheck
+        working-directory: web/studio
+        run: npm run typecheck
+
+      - name: Studio tests
+        working-directory: web/studio
+        run: npm test
+
+      - name: Studio build
+        working-directory: web/studio
+        run: npm run build
+
+      - name: Go tests
+        run: go test ./...
+
+      - name: Go vet
+        run: go vet ./...
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser tests
+        run: npm run test:browser
+
+      - name: Upload browser test results on failure
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-test-results
+          path: test-results/
+          retention-days: 7
+          if-no-files-found: ignore

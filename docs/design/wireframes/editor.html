@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LRN-002 · Éditeur Studio (wireframe)</title>
+<link rel="stylesheet" href="../../../web/design/tokens.css">
+<link rel="stylesheet" href="wireframes.css">
+</head>
+<body>
+<a class="skip" href="#doc-main">Aller au contenu du document</a>
+<div class="doc">
+<header>
+  <nav class="crumbs" aria-label="Wireframes"><a href="index.html">Index des wireframes</a><a href="README.md">Notes (README)</a></nav>
+  <h1>Flow 2 — Studio lesson editor (author)</h1>
+  <p class="notice"><strong>Wireframe, not production UI.</strong> Studio is the React/TypeScript/TipTap app (LRN-003, in progress separately). Block types below are taken from the current experimental contract in <code>docs/fixtures/README.md</code>; this page does not change that schema. Lesson text is placeholder.</p>
+  <p class="lede">Covers: editing a draft, the changes-requested return path, submitted (immutable) state, save conflict and submit validation errors, a narrow-screen layout, and who can open the editor.</p>
+</header>
+<main id="doc-main">
+
+<h2 id="draft">2.1 Desktop — editing a draft</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1024+</strong> · Tab order follows the numbers</figcaption>
+    <div class="frame-scroll">
+    <div class="screen desktop ui">
+      <div class="ui-bar">
+        <span class="n" aria-hidden="true">1</span><a class="btn quiet" href="dashboard.html#teacher">← Mes leçons</a>
+        <div class="grow">
+          <strong>Forme algébrique d’un nombre complexe</strong>
+          <span class="status draft">Brouillon · révision 3</span>
+          <span class="caption" role="status" aria-live="polite">Enregistré il y a 5 s</span>
+        </div>
+        <span class="n" aria-hidden="true">2</span><a class="btn" href="#preview">Aperçu</a>
+        <span class="n" aria-hidden="true">3</span><button class="btn primary" type="button">Soumettre pour relecture</button>
+      </div>
+      <div class="split">
+        <div>
+          <div class="toolbar" role="toolbar" aria-label="Mise en forme" aria-controls="e1-doc">
+            <span class="n" aria-hidden="true">4</span>
+            <button class="btn" type="button" tabindex="0">Titre</button>
+            <button class="btn" type="button" tabindex="-1">Paragraphe</button>
+            <button class="btn" type="button" tabindex="-1">Liste</button>
+            <button class="btn" type="button" tabindex="-1" aria-pressed="false"><strong>G</strong></button>
+            <span class="sep" aria-hidden="true"></span>
+            <button class="btn" type="button" tabindex="-1">Math en ligne</button>
+            <button class="btn" type="button" tabindex="-1">Formule</button>
+            <span class="sep" aria-hidden="true"></span>
+            <button class="btn" type="button" tabindex="-1">Image</button>
+            <button class="btn" type="button" tabindex="-1">Vidéo YouTube</button>
+            <button class="btn" type="button" tabindex="-1">Encadré</button>
+            <button class="btn" type="button" tabindex="-1">Exercice</button>
+            <span class="sep" aria-hidden="true"></span>
+            <button class="btn" type="button" tabindex="-1" aria-haspopup="menu">Langue du bloc : FR ▾</button>
+          </div>
+          <div class="ui-body">
+            <span class="n" aria-hidden="true">5</span>
+            <div class="editable" id="e1-doc" role="textbox" aria-multiline="true" aria-label="Contenu de la leçon" tabindex="0">
+              <div class="blk"><span class="blk-tag">heading</span><h2 style="margin:0">[Titre de section]</h2></div>
+              <div class="blk"><span class="blk-tag">paragraph</span><span class="ph w90"></span><span class="ph w60"></span></div>
+              <div class="blk selected">
+                <span class="blk-tag">displayMath · source TeX ↔ rendu KaTeX</span>
+                <div class="row" style="align-items:stretch">
+                  <code class="formula" style="flex:1;text-align:start">z = 3 + 2i</code>
+                  <div class="formula" style="flex:1">z = 3 + 2i</div>
+                </div>
+              </div>
+              <div class="blk block-ar" lang="ar" dir="rtl"><span class="blk-tag" lang="en" dir="ltr">paragraph · lang=ar dir=rtl</span><span class="ph w90"></span><span class="ph w40"></span></div>
+              <div class="blk"><span class="blk-tag">youtube · vide (sélection en attente)</span><div class="video-slot">ID vidéo YouTube (11 caractères) — facultatif</div></div>
+              <div class="blk"><span class="blk-tag">exercise › solution</span><span class="ph w75"></span><div class="panel"><span class="caption">Solution</span><span class="ph w60"></span></div></div>
+            </div>
+          </div>
+        </div>
+        <aside aria-label="Informations de la leçon">
+          <span class="n" aria-hidden="true">6</span>
+          <h2 class="small" style="margin-block-start:0">Classement</h2>
+          <div class="field"><label for="e1-sec">Section</label><select id="e1-sec"><option>Mathématiques</option></select></div>
+          <div class="field"><label for="e1-sub">Matière</label><select id="e1-sub"><option>Mathématiques</option></select></div>
+          <div class="field"><label for="e1-ch">Chapitre</label><select id="e1-ch"><option>Nombres complexes</option></select><span class="hint">Liste du catalogue ; seuls les administrateurs créent des chapitres.</span></div>
+          <div class="field"><label for="e1-obj">Objectif</label><textarea id="e1-obj" style="min-height:4rem"></textarea></div>
+          <div class="field"><label for="e1-pre">Prérequis</label><textarea id="e1-pre" style="min-height:3rem"></textarea></div>
+          <div class="field"><label for="e1-lang">Langue de la leçon</label><select id="e1-lang"><option>Français</option><option>Arabe</option></select></div>
+          <p class="caption">Basée sur la révision publiée 1 · <a href="#history">Historique</a></p>
+        </aside>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>Annotations</h3>
+    <ol>
+      <li><span class="n">1</span><span>Back to the teacher's lesson list (Flow 5, teacher view).</span></li>
+      <li><span class="n">2</span><span>Preview uses the canonical Go renderer (same output as the reader, Flow 1), with phone/desktop width toggle.</span></li>
+      <li><span class="n">3</span><span>Submit is the only primary action. It opens a confirmation: "Après soumission, cette révision ne pourra plus être modifiée." Validation errors appear as in 2.4.</span></li>
+      <li><span class="n">4</span><span><code>role="toolbar"</code> with roving tabindex: one Tab stop, arrow keys move between buttons (mirrored in RTL), Escape returns to the document. Buttons map 1:1 to allowed block types; nothing outside the contract is offered.</span></li>
+      <li><span class="n">5</span><span>Document area. Each block shows a small type tag while editing. Formula blocks show TeX source next to the rendered result; render errors are shown in text inside the block, never silently dropped.</span></li>
+      <li><span class="n">6</span><span>Metadata panel after the document in Tab order. Metadata is part of the reviewed snapshot (title, objective, prerequisites, curriculum assignment).</span></li>
+    </ol>
+    <p class="small">Save status is an <code>aria-live="polite"</code> region. Autosave uses version-checked saves (2.4 conflict).</p>
+    <p class="small"><span class="proposed">Coordinate with #3</span> Keyboard shortcuts (e.g. Ctrl+B, an inline-math shortcut) and the exact block-language control are proposals for the TipTap prototype, not decisions.</p>
+  </div>
+</div>
+
+<h2 id="changes">2.2 Changes requested — author returns</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1024+</strong> · reviewer's required comment is shown first</figcaption>
+    <div class="frame-scroll">
+    <div class="screen desktop ui short">
+      <div class="ui-bar">
+        <a class="btn quiet" href="dashboard.html#teacher">← Mes leçons</a>
+        <div class="grow"><strong>Forme algébrique d’un nombre complexe</strong> <span class="status changes">Modifications demandées · révision 2</span></div>
+      </div>
+      <div class="ui-body wide">
+        <section class="banner err" aria-labelledby="e2-h" tabindex="-1">
+          <h2 id="e2-h" style="font-size:1rem;margin:0 0 .25rem">Le relecteur a demandé des modifications</h2>
+          <p class="small">[Relecteur] · 12 nov. 2026 · révision 2</p>
+          <blockquote style="margin:0;padding-inline-start:1rem;border-inline-start:3px solid var(--learnoo-color-danger)"><span class="ph w90"></span><span class="ph w60"></span></blockquote>
+          <p class="small">La révision 2 est conservée telle quelle. Vos corrections seront une nouvelle révision.</p>
+          <div class="row">
+            <button class="btn primary" type="button">Créer la révision corrigée (3)</button>
+            <a class="btn" href="#e2-snap">Voir la révision 2</a>
+          </div>
+        </section>
+        <div id="e2-snap" class="editable" style="min-height:8rem;opacity:1" aria-readonly="true">
+          <p class="caption" style="margin-top:0">Révision 2 — lecture seule</p>
+          <span class="ph w90"></span><span class="ph w60"></span><span class="ph w75"></span>
+        </div>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>Rules</h3>
+    <ul class="small">
+      <li>The reviewer's comment is mandatory for this state (Flow 3), so this banner is never empty.</li>
+      <li>"Créer la révision corrigée" creates the successor draft based on revision 2's content; the editor (2.1) then shows the comment in a collapsible side note while editing.</li>
+      <li>Only one open draft/review candidate per lesson: if a successor draft already exists, the button becomes "Continuer la révision 3".</li>
+      <li>The currently published revision (if any) stays visible to students throughout.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="submitted">2.3 Submitted — in review (immutable)</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1024+</strong> · no editing controls are rendered</figcaption>
+    <div class="frame-scroll">
+    <div class="screen desktop ui short">
+      <div class="ui-bar">
+        <a class="btn quiet" href="dashboard.html#teacher">← Mes leçons</a>
+        <div class="grow"><strong>Forme algébrique d’un nombre complexe</strong> <span class="status review">En relecture · révision 3</span></div>
+        <a class="btn" href="#preview">Aperçu</a>
+      </div>
+      <div class="ui-body wide">
+        <div class="banner info"><p><strong>Révision 3 soumise le 14 nov. 2026.</strong> Son contenu ne peut plus être modifié. Vous serez informé·e dans Studio de la décision.</p></div>
+        <span class="ph w90"></span><span class="ph w75"></span><span class="ph w60"></span>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>Immutability is a server rule; the UI simply does not offer edit controls.</li>
+      <li>Email notifications are deferred (M2); status is visible on the teacher dashboard.</li>
+      <li><span class="proposed">Open</span> Whether an author may cancel a pending submission is not specified; not shown.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="errors">2.4 Errors</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>Save conflict</strong> (two tabs / stale version)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <div class="banner err" role="alert">
+          <p><strong>Vos dernières modifications n’ont pas été enregistrées.</strong></p>
+          <p class="small">Ce brouillon a été modifié ailleurs (autre onglet ou appareil). Rien n’a été écrasé.</p>
+          <div class="stack">
+            <button class="btn block" type="button">Copier mes modifications</button>
+            <button class="btn primary block" type="button">Recharger la dernière version</button>
+          </div>
+        </div>
+        <p class="caption">Editing is paused until the author chooses. Local unsaved content is kept in the page until then.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>Submit blocked by validation</strong></figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <div class="error-summary" role="alert" tabindex="-1">
+          <h3>La révision n’a pas été soumise</h3>
+          <ul>
+            <li><a href="#e1-obj">Ajoutez l’objectif de la leçon</a></li>
+            <li><a href="#e1-doc">Formule 2 : erreur de syntaxe TeX</a></li>
+            <li><a href="#e1-doc">Vidéo : l’identifiant doit contenir 11 caractères</a></li>
+          </ul>
+        </div>
+        <p class="caption">Each link moves focus to the block/field. Server validation (size, node and depth limits, allowlisted media) is authoritative; client checks only mirror it.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>Not allowed</strong> (student or non-author opens Studio URL)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <h1 class="lesson-title">Accès non autorisé</h1>
+        <p>Studio est réservé aux enseignants invités. Si vous êtes enseignant, contactez l’équipe Learnoo.</p>
+        <a class="btn block" href="dashboard.html">Retour au tableau de bord</a>
+        <p class="caption">HTTP 403 from the server. A teacher opening another author's draft gets the same page.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+</div>
+
+<h2 id="mobile">2.5 Narrow screen (Studio on a phone)</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · same features, collapsed toolbar; metadata on its own tab</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui">
+      <div class="ui-bar">
+        <span class="n" aria-hidden="true">1</span><a class="btn icon quiet" href="dashboard.html#teacher" aria-label="Mes leçons">←</a>
+        <div class="grow small"><strong>Forme algébrique…</strong><br><span class="caption" role="status">Brouillon · enregistré</span></div>
+        <span class="n" aria-hidden="true">2</span><button class="btn icon quiet" type="button" aria-haspopup="menu" aria-label="Plus d’actions : aperçu, soumettre">⋯</button>
+      </div>
+      <div role="tablist" aria-label="Vue" class="row" style="padding:.5rem .75rem;border-block-end:1px solid var(--learnoo-color-border)">
+        <span class="n" aria-hidden="true">3</span>
+        <button class="btn" role="tab" aria-selected="true" type="button">Contenu</button>
+        <button class="btn quiet" role="tab" aria-selected="false" type="button" tabindex="-1">Informations</button>
+        <button class="btn quiet" role="tab" aria-selected="false" type="button" tabindex="-1">Commentaires</button>
+      </div>
+      <div class="toolbar" role="toolbar" aria-label="Mise en forme">
+        <span class="n" aria-hidden="true">4</span>
+        <button class="btn" type="button" aria-haspopup="menu">Insérer ▾</button>
+        <button class="btn" type="button" tabindex="-1" aria-haspopup="menu">Format ▾</button>
+        <button class="btn" type="button" tabindex="-1">FR ▾</button>
+      </div>
+      <div class="ui-body">
+        <span class="n" aria-hidden="true">5</span>
+        <div class="editable" role="textbox" aria-multiline="true" aria-label="Contenu de la leçon" tabindex="0">
+          <span class="ph w90"></span><span class="ph w60"></span>
+          <div class="formula">z = 3 + 2i</div>
+          <span class="ph w75"></span>
+        </div>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li><span class="proposed">Unverified assumption</span> Teachers mostly write on a computer; phone use is for small fixes and reading reviewer comments. Needs confirmation with teachers.</li>
+      <li>The "⋯" menu holds Aperçu and Soumettre pour relecture. Submit keeps the same confirmation as desktop.</li>
+      <li>Toolbar stays above the on-screen keyboard; 44px targets are kept in menus.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="history">2.6 Revision history (side panel)</h2>
+<div class="table-scroll">
+<table class="matrix">
+  <thead><tr><th>Révision</th><th>État</th><th>Par</th><th>Décision / commentaire</th></tr></thead>
+  <tbody>
+    <tr><td>3</td><td><span class="status draft">Brouillon</span></td><td>[Auteur]</td><td>—</td></tr>
+    <tr><td>2</td><td><span class="status changes">Modifications demandées</span></td><td>[Auteur]</td><td>[Relecteur] : commentaire (obligatoire)</td></tr>
+    <tr><td>1</td><td><span class="status approved">Approuvée · publiée</span></td><td>[Auteur]</td><td>[Relecteur] : approuvée ; publiée par [Éditeur]</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small">Read-only for authors. Withdraw/restore/unpublish actions are administrator/publisher tools (LRN-009) and are not part of this screen.</p>
+
+<h2 id="preview">2.7 Preview</h2>
+<p class="small">"Aperçu" opens the lesson through the same renderer as <a href="reader.html#mobile-fr">Flow 1</a>, inside a frame with a width toggle (Téléphone 360 / Ordinateur) and a banner "Aperçu — non publié". No separate preview styling is allowed.</p>
+
+<h2 id="who">Who can open the editor</h2>
+<div class="table-scroll">
+<table class="matrix">
+  <thead><tr><th>State</th><th>Student</th><th>Teacher</th><th>Teacher + Reviewer</th><th>Admin</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Studio link in header</th><td>Hidden; URL returns 403</td><td>Shown (<code>author</code>)</td><td>Shown</td><td>Shown</td></tr>
+    <tr><th scope="row">Edit own draft</th><td>—</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+    <tr><th scope="row">Edit another author's draft</th><td>—</td><td>No (403)</td><td>No — reviewers comment, they do not edit</td><td>No <span class="proposed">assumed</span></td></tr>
+    <tr><th scope="row">Edit submitted revision</th><td colspan="4">Nobody. Submitted snapshots are immutable.</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small">Hiding a link is never the permission check; every action is authorized on the server.</p>
+
+</main>
+</div>
+</body>
+</html>

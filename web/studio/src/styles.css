@@ -1,0 +1,118 @@
+/* Studio prototype styles. Consumes the shared --learnoo-* tokens (web/design);
+   logical properties keep RTL correct. No animation or transitions are used. */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--learnoo-color-canvas);
+  color: var(--learnoo-color-ink);
+  font-family: var(--learnoo-font-sans);
+  font-size: var(--learnoo-text-small);
+  line-height: var(--learnoo-leading-body);
+}
+
+/* Formulas keep KaTeX's fonts, as in the reader; :where() keeps this rule's specificity unchanged. */
+:lang(ar):where(:not(.katex, .katex *)) { font-family: var(--learnoo-font-arabic); line-height: var(--learnoo-leading-arabic); letter-spacing: normal; }
+
+.studio-header { padding: var(--learnoo-space-4); background: var(--learnoo-color-surface); border-block-end: 1px solid var(--learnoo-color-border); }
+.brand { margin: 0; font-weight: var(--learnoo-weight-heading); letter-spacing: 0.08em; }
+.brand span { margin-inline-start: var(--learnoo-space-2); font-weight: var(--learnoo-weight-body); letter-spacing: normal; color: var(--learnoo-color-muted); }
+.notice {
+  margin: var(--learnoo-space-3) 0 0;
+  padding: var(--learnoo-space-2) var(--learnoo-space-3);
+  background: var(--learnoo-color-warning-background);
+  border: 1px solid var(--learnoo-color-warning-border);
+  color: var(--learnoo-color-warning-text);
+  border-radius: var(--learnoo-radius-control);
+}
+
+.studio-layout { display: grid; gap: var(--learnoo-space-4); padding: var(--learnoo-space-4); max-width: var(--learnoo-width-page); margin-inline: auto; }
+@media (min-width: 64rem) { .studio-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; } }
+
+.panel { min-width: 0; background: var(--learnoo-color-surface); border: 1px solid var(--learnoo-color-border); border-radius: var(--learnoo-radius-panel); padding: var(--learnoo-space-4); }
+h1, h2 { margin: 0 0 var(--learnoo-space-3); font-size: var(--learnoo-text-heading); line-height: var(--learnoo-leading-heading); }
+.hint { color: var(--learnoo-color-muted); margin: 0 0 var(--learnoo-space-3); }
+
+.fields { display: grid; gap: var(--learnoo-space-1); margin-block-end: var(--learnoo-space-3); }
+.fields.inline { margin-block-start: var(--learnoo-space-3); }
+label { font-weight: var(--learnoo-weight-emphasis); }
+input, select, textarea {
+  font: inherit;
+  min-height: var(--learnoo-size-touch);
+  padding: var(--learnoo-space-2);
+  border: 1px solid var(--learnoo-color-control-border);
+  border-radius: var(--learnoo-radius-control);
+  background: var(--learnoo-color-surface);
+  color: var(--learnoo-color-ink);
+  width: 100%;
+}
+input[aria-invalid='true'] { border-color: var(--learnoo-color-danger); }
+
+button {
+  font: inherit;
+  min-height: var(--learnoo-size-touch);
+  padding: 0 var(--learnoo-space-3);
+  border: 1px solid var(--learnoo-color-brand);
+  border-radius: var(--learnoo-radius-control);
+  background: var(--learnoo-color-surface);
+  color: var(--learnoo-color-brand);
+  cursor: pointer;
+}
+button:hover { background: var(--learnoo-color-brand-soft); }
+button.primary { background: var(--learnoo-color-brand); color: var(--learnoo-color-on-brand); }
+button.primary:hover { background: var(--learnoo-color-brand-hover); }
+button[aria-pressed='true'] { background: var(--learnoo-color-brand-selected); }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+:focus-visible { outline: 3px solid var(--learnoo-color-focus); outline-offset: 2px; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: var(--learnoo-space-2); margin-block-end: var(--learnoo-space-2); }
+.toolbar { column-gap: var(--learnoo-space-4); }
+.toolbar [role='group'] { display: flex; flex-wrap: wrap; gap: var(--learnoo-space-1); }
+
+.editor-frame { border: 1px solid var(--learnoo-color-control-border); border-radius: var(--learnoo-radius-control); background: var(--learnoo-color-surface); }
+.studio-editor { min-height: 16rem; padding: var(--learnoo-space-3); font-size: var(--learnoo-text-body); line-height: var(--learnoo-leading-body); overflow-wrap: anywhere; }
+.studio-editor:focus-visible { outline-offset: -3px; }
+.studio-editor h2 { font-size: var(--learnoo-text-heading); }
+.studio-editor .studio-lang[lang='ar'] { background: var(--learnoo-color-accent-soft); }
+/* Formulas are typeset by KaTeX (src/math.ts); the dashed frame marks them as editable atoms. */
+.studio-math, .studio-math-block { background: var(--learnoo-color-surface-subtle); border: 1px dashed var(--learnoo-color-control-border); border-radius: 4px; unicode-bidi: isolate; }
+.studio-math { padding-inline: 0.25em; }
+/* Long formulas scroll inside their block, as in the reader (beats ProseMirror's atom white-space rule). */
+.studio-editor .studio-math-block { white-space: normal; overflow-wrap: normal; }
+.studio-math-block { display: block; padding: var(--learnoo-space-2); margin-block: var(--learnoo-space-2); overflow-x: auto; text-align: start; }
+.studio-math-block .katex-display { margin: 0; }
+/* Empty and invalid formulas show their TeX, like the reader's .math-error. */
+.studio-math.math-empty, .studio-math-block.math-empty, .studio-math.math-error, .studio-math-block.math-error { font-family: var(--learnoo-font-mono); font-size: 0.9em; }
+.studio-editor .studio-math-block.math-empty, .studio-editor .studio-math-block.math-error { white-space: pre; }
+.math-error { color: var(--learnoo-color-danger); background: var(--learnoo-color-danger-soft); border-color: var(--learnoo-color-danger); }
+.studio-callout, .studio-exercise, .studio-solution, .studio-video, .studio-image { margin-block: var(--learnoo-space-3); padding: var(--learnoo-space-2) var(--learnoo-space-3); border-inline-start: 4px solid var(--learnoo-color-brand); background: var(--learnoo-color-surface-subtle); border-radius: 4px; }
+.studio-exercise { border-inline-start-color: var(--learnoo-color-success-text); }
+.studio-solution { background: var(--learnoo-color-surface); border-inline-start-color: var(--learnoo-color-muted); }
+.studio-node-label { margin: 0; font-size: var(--learnoo-text-caption); font-weight: var(--learnoo-weight-emphasis); color: var(--learnoo-color-muted); user-select: none; }
+.studio-image img { max-width: 100%; height: auto; }
+.ProseMirror-selectednode { outline: 3px solid var(--learnoo-color-focus); }
+.ProseMirror-gapcursor { display: none; pointer-events: none; position: absolute; }
+.ProseMirror-gapcursor::after { content: ''; display: block; position: absolute; top: -2px; width: 20px; border-top: 1px solid var(--learnoo-color-ink); }
+.ProseMirror-focused .ProseMirror-gapcursor { display: block; }
+
+.paste-notice { margin: var(--learnoo-space-2) 0 0; padding: var(--learnoo-space-2); background: var(--learnoo-color-warning-background); color: var(--learnoo-color-warning-text); border-radius: var(--learnoo-radius-control); }
+
+.inspector { margin: var(--learnoo-space-3) 0; border: 1px solid var(--learnoo-color-border); border-radius: var(--learnoo-radius-control); display: grid; gap: var(--learnoo-space-2); }
+.inspector label { display: grid; gap: var(--learnoo-space-1); }
+.inspector .row { display: grid; gap: var(--learnoo-space-2); grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); }
+.tex { font-family: var(--learnoo-font-mono); }
+.tex-preview { min-height: 2.5rem; }
+.tex-preview .hint { margin: 0; }
+.tex-rendered { overflow-x: auto; padding: var(--learnoo-space-2); background: var(--learnoo-color-surface-subtle); border-radius: 4px; unicode-bidi: isolate; }
+.tex-rendered .katex-display { margin: 0; }
+.tex-error { margin: 0; color: var(--learnoo-color-danger); overflow-wrap: anywhere; }
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--learnoo-space-2); }
+.status { margin: var(--learnoo-space-3) 0 0; }
+.status.error, .errors { color: var(--learnoo-color-danger); }
+.errors { margin: var(--learnoo-space-2) 0 0; padding-inline-start: var(--learnoo-space-5); }
+.json-output pre { max-height: 20rem; overflow: auto; background: var(--learnoo-color-surface-subtle); padding: var(--learnoo-space-2); font-size: var(--learnoo-text-caption); }
+
+#preview-frame { display: block; width: 100%; min-height: 36rem; margin-block-start: var(--learnoo-space-3); border: 1px solid var(--learnoo-color-border); border-radius: var(--learnoo-radius-control); background: var(--learnoo-color-surface); }

@@ -1,0 +1,232 @@
+[
+ {
+  "name": "minimal paragraph",
+  "valid": true,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"Bonjour\"}]}]}"
+ },
+ {
+  "name": "strong with math and lang text",
+  "valid": true,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"strong\", \"children\": [{\"type\": \"text\", \"text\": \"gras \"}, {\"type\": \"math\", \"text\": \"x^2\"}]}, {\"type\": \"text\", \"text\": \" عربي\", \"lang\": \"ar\", \"dir\": \"rtl\"}]}]}"
+ },
+ {
+  "name": "arabic document with dir auto",
+  "valid": true,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"ar\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"lang\": \"ar\", \"dir\": \"auto\", \"children\": [{\"type\": \"text\", \"text\": \"نص\"}]}]}"
+ },
+ {
+  "name": "exercise with solution",
+  "valid": true,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"exercise\", \"title\": \"Ex\", \"children\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"q\"}]}, {\"type\": \"solution\", \"children\": [{\"type\": \"displayMath\", \"text\": \"x=1\"}]}]}]}"
+ },
+ {
+  "name": "empty youtube slot and valid id",
+  "valid": true,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"youtube\", \"title\": \"V\"}, {\"type\": \"youtube\", \"videoId\": \"abcdefghijk\"}]}"
+ },
+ {
+  "name": "allowlisted image",
+  "valid": true,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"src\": \"/static/complex-plane.svg\", \"alt\": \"Plan\"}]}"
+ },
+ {
+  "name": "deepest accepted nesting (text leaf at depth 11)",
+  "valid": true,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"x\"}]}]}]}]}]}]}]}]}]}]}]}]}"
+ },
+ {
+  "name": "repeated keys in sibling objects and key-like text",
+  "valid": true,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"\\\"text\\\": \\\"x\\\", {\\\"type\\\": [}\"}, {\"type\": \"math\", \"text\": \"\\\\{ a \\\\}\"}]}, {\"type\": \"image\", \"src\": \"/static/complex-plane.svg\", \"alt\": \"Plan\"}]}"
+ },
+ {
+  "name": "malformed JSON",
+  "valid": false,
+  "source": "{\"schemaVersion\":1,"
+ },
+ {
+  "name": "trailing second document",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]} {}"
+ },
+ {
+  "name": "unknown document field",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}],\"author\":\"x\"}"
+ },
+ {
+  "name": "unknown node field",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"class\": \"x\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}"
+ },
+ {
+  "name": "schema version 2",
+  "valid": false,
+  "source": "{\"schemaVersion\": 2, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}"
+ },
+ {
+  "name": "approved status",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"approved\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}"
+ },
+ {
+  "name": "unsupported language",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"en\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}"
+ },
+ {
+  "name": "empty title",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}"
+ },
+ {
+  "name": "empty blocks",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": []}"
+ },
+ {
+  "name": "text at block level",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"text\", \"text\": \"a\"}]}"
+ },
+ {
+  "name": "paragraph inside paragraph",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}]}"
+ },
+ {
+  "name": "item outside list",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"item\", \"children\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}]}"
+ },
+ {
+  "name": "list with paragraph child",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"list\", \"children\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}]}"
+ },
+ {
+  "name": "solution outside exercise",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"solution\", \"children\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}]}"
+ },
+ {
+  "name": "empty text leaf",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"\"}]}]}"
+ },
+ {
+  "name": "empty container",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"callout\", \"title\": \"x\", \"children\": []}]}"
+ },
+ {
+  "name": "external image",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"src\": \"https://example.com/a.png\", \"alt\": \"a\"}]}"
+ },
+ {
+  "name": "image without alt",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"src\": \"/static/complex-plane.svg\"}]}"
+ },
+ {
+  "name": "youtube URL instead of id",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"youtube\", \"videoId\": \"https://youtu.be/abcdefghijk\"}]}"
+ },
+ {
+  "name": "media attribute on paragraph",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"src\": \"/static/complex-plane.svg\", \"children\": [{\"type\": \"text\", \"text\": \"a\"}]}]}"
+ },
+ {
+  "name": "invalid lang",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\", \"lang\": \"en\"}]}]}"
+ },
+ {
+  "name": "invalid dir",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\", \"dir\": \"up\"}]}]}"
+ },
+ {
+  "name": "html node type",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"html\", \"text\": \"<script>alert(1)</script>\"}]}"
+ },
+ {
+  "name": "formula over 2000 bytes",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"displayMath\", \"text\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"}]}"
+ },
+ {
+  "name": "one level deeper rejected",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"callout\", \"children\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"x\"}]}]}]}]}]}]}]}]}]}]}]}]}]}"
+ },
+ {
+  "name": "text value of wrong type",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": 5}]}]}"
+ },
+ {
+  "name": "upper-case key SRC beside allowed src",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"src\": \"/static/complex-plane.svg\", \"alt\": \"Plan\", \"SRC\": \"javascript:alert(1)\"}]}"
+ },
+ {
+  "name": "upper-case key SRC alone",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"SRC\": \"/static/complex-plane.svg\", \"alt\": \"Plan\"}]}"
+ },
+ {
+  "name": "long s key ſrc beside allowed src",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"src\": \"/static/complex-plane.svg\", \"alt\": \"Plan\", \"ſrc\": \"javascript:alert(1)\"}]}"
+ },
+ {
+  "name": "long s key ſrc alone",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"ſrc\": \"/static/complex-plane.svg\", \"alt\": \"Plan\"}]}"
+ },
+ {
+  "name": "title-case document key",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"Title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"Bonjour\"}]}]}"
+ },
+ {
+  "name": "duplicate src (unsafe value last)",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"src\": \"/static/complex-plane.svg\", \"src\": \"javascript:alert(1)\", \"alt\": \"Plan\"}]}"
+ },
+ {
+  "name": "duplicate src (allowed value last)",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"src\": \"javascript:alert(1)\", \"src\": \"/static/complex-plane.svg\", \"alt\": \"Plan\"}]}"
+ },
+ {
+  "name": "duplicate src spelled with an escape",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"image\", \"src\": \"/static/complex-plane.svg\", \"alt\": \"Plan\", \"\\u0073rc\": \"javascript:alert(1)\"}]}"
+ },
+ {
+  "name": "duplicate document key",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"approved\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"Bonjour\"}]}]}"
+ },
+ {
+  "name": "duplicate key in nested text node",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"a\", \"text\": \"b\"}]}]}"
+ },
+ {
+  "name": "trailing closing brace",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"Bonjour\"}]}]}}"
+ },
+ {
+  "name": "trailing closing bracket",
+  "valid": false,
+  "source": "{\"schemaVersion\": 1, \"title\": \"Test technique\", \"language\": \"fr\", \"status\": \"unreviewed\", \"objective\": \"\", \"blocks\": [{\"type\": \"paragraph\", \"children\": [{\"type\": \"text\", \"text\": \"Bonjour\"}]}]}]"
+ }
+]

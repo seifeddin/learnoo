@@ -48,7 +48,7 @@ CSS variables serve the Go reader directly; Tailwind is build-time tooling for t
 
 ## Remaining design work
 
-LRN-002 still needs mobile reader, Studio editor, reviewer decision, registration and dashboard wireframes. Use these foundations for those screens; do not infer that unbuilt flows are implemented. Preview and the student reader must continue sharing the canonical lesson renderer.
+Draft LRN-002 wireframes for the mobile reader, Studio editor, reviewer decision, registration and dashboard are in [docs/design/wireframes](docs/design/wireframes/README.md), pending maintainer, teacher and student review. They are references, not implemented flows. Preview and the student reader must continue sharing the canonical lesson renderer.
 
 ## Landing preview
 

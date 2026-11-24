@@ -4,12 +4,13 @@ package rendering
 import (
 	"bytes"
 	"embed"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
 	"io"
 	"regexp"
+
+	"github.com/hadden-me/learnoo/internal/strictjson"
 )
 
 //go:embed page.html static/* fixtures/*.json
@@ -50,13 +51,8 @@ func Decode(r io.Reader) (Document, error) {
 	if len(data) > MaxDocumentBytes {
 		return doc, errors.New("document exceeds 128 KiB")
 	}
-	dec := json.NewDecoder(bytes.NewReader(data))
-	dec.DisallowUnknownFields()
-	if err := dec.Decode(&doc); err != nil {
-		return doc, fmt.Errorf("invalid JSON: %w", err)
-	}
-	if err := dec.Decode(new(any)); err != io.EOF {
-		return doc, errors.New("expected one JSON document")
+	if err := strictjson.Unmarshal(data, &doc); err != nil {
+		return Document{}, fmt.Errorf("invalid JSON: %w", err)
 	}
 	return doc, Validate(doc)
 }

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LRN-002 · Décision de relecture (wireframe)</title>
+<link rel="stylesheet" href="../../../web/design/tokens.css">
+<link rel="stylesheet" href="wireframes.css">
+</head>
+<body>
+<a class="skip" href="#doc-main">Aller au contenu du document</a>
+<div class="doc">
+<header>
+  <nav class="crumbs" aria-label="Wireframes"><a href="index.html">Index des wireframes</a><a href="README.md">Notes (README)</a></nav>
+  <h1>Flow 3 — Reviewer decision and publication</h1>
+  <p class="notice"><strong>Wireframe, not production UI.</strong> Labels "Teacher", "Teacher + Reviewer" and "Administrator" follow the role model confirmed on 2026-11-24 (DECISIONS.md, Role model). Underneath, the screens depend only on the independent permissions <code>reviewer</code> (per subject), <code>publisher</code> and <code>administrator</code>, which the server checks. Nothing here grants a new permission.</p>
+  <p class="lede">Covers: the decision screen, required comment for "request changes", self-approval denial, approval and publication as separate controls, a stale-publication conflict, the reviewer queue with empty state, and the mobile layout.</p>
+</header>
+<main id="doc-main">
+
+<h2 id="decision">3.1 Desktop — assigned reviewer, not the author</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1024+</strong> · submitted snapshot on the left, decision on the right</figcaption>
+    <div class="frame-scroll">
+    <div class="screen desktop ui">
+      <div class="ui-bar">
+        <span class="n" aria-hidden="true">1</span><a class="btn quiet" href="#queue">← À relire</a>
+        <div class="grow"><strong>Forme algébrique d’un nombre complexe</strong> <span class="status review">En relecture · révision 3</span></div>
+      </div>
+      <div class="split">
+        <div class="ui-body wide">
+          <span class="n" aria-hidden="true">2</span>
+          <p class="caption" style="margin-top:0">Soumise par [Auteur] le 14 nov. 2026 · Mathématiques › Nombres complexes · Basée sur la révision publiée 1 · <a href="editor.html#history">Révision précédente (2) et commentaire</a></p>
+          <div class="banner"><p class="small"><strong>Instantané soumis — lecture seule.</strong> Rendu identique à la page élève.</p></div>
+          <h3 style="margin-top:0">Objectif</h3><span class="ph w75"></span>
+          <h3>Contenu</h3>
+          <span class="ph w90"></span><span class="ph"></span><span class="ph w60"></span>
+          <div class="formula">z = 3 + 2i</div>
+          <span class="ph w90"></span><span class="ph w75"></span>
+          <h3>Exercices et solutions</h3>
+          <span class="ph w90"></span><span class="ph w40"></span>
+        </div>
+        <aside aria-labelledby="r1-dec">
+          <h2 id="r1-dec" class="small" style="margin-top:0;font-size:1.0625rem"><span class="n" aria-hidden="true">3</span> Votre décision</h2>
+          <fieldset style="border:0;padding:0;margin:0 0 1rem">
+            <legend class="small" style="font-weight:600">Points vérifiés <span class="proposed">proposed checklist</span></legend>
+            <label class="check small"><input type="checkbox"> Conforme au programme du BAC</label>
+            <label class="check small"><input type="checkbox"> Exact sur le plan scientifique</label>
+            <label class="check small"><input type="checkbox"> Clair pour un élève</label>
+            <label class="check small"><input type="checkbox"> Droits des images et vidéos vérifiés</label>
+          </fieldset>
+          <fieldset style="border:0;padding:0;margin:0 0 1rem">
+            <legend style="font-weight:600"><span class="n" aria-hidden="true">4</span> Décision</legend>
+            <label class="check"><input type="radio" name="r1-d" value="approve"> Approuver la révision 3</label>
+            <label class="check"><input type="radio" name="r1-d" value="changes" checked> Demander des modifications</label>
+          </fieldset>
+          <div class="field">
+            <label for="r1-c"><span class="n" aria-hidden="true">5</span> Commentaire pour l’auteur</label>
+            <span class="hint" id="r1-c-h">Obligatoire pour demander des modifications. Facultatif pour une approbation.</span>
+            <textarea id="r1-c" aria-describedby="r1-c-h"></textarea>
+          </div>
+          <span class="n" aria-hidden="true">6</span>
+          <button class="btn primary block" type="button">Envoyer : demander des modifications</button>
+          <p class="caption">La décision est enregistrée avec votre nom, la révision et l’heure.</p>
+          <hr style="border:0;border-top:1px solid var(--learnoo-color-border);margin:1.25rem 0">
+          <h2 class="small" style="font-size:1rem">Publication</h2>
+          <p class="small muted">Disponible après approbation, pour les personnes ayant la permission de publier. Voir 3.4.</p>
+        </aside>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>Annotations</h3>
+    <ol>
+      <li><span class="n">1</span><span>Back to the queue (3.5).</span></li>
+      <li><span class="n">2</span><span>Revision context first: author, date, curriculum assignment, published base, link to the previous changes-requested revision and its comment. Advanced diffs are deferred (Phase 2).</span></li>
+      <li><span class="n">3</span><span>Decision panel comes after the snapshot in DOM order (read, then decide). A "Aller à la décision" skip link is offered at the top on mobile (3.6).</span></li>
+      <li><span class="n">4</span><span>One radio group + one submit button instead of two side-by-side buttons: avoids accidental approval and makes the required-comment rule visible before submitting. Arrow keys move within the group.</span></li>
+      <li><span class="n">5</span><span>Comment: required for "request changes" (3.2), optional for approval.</span></li>
+      <li><span class="n">6</span><span>Button label states the chosen action ("Envoyer : approuver" / "Envoyer : demander des modifications"). Approval asks for confirmation; the snapshot is never editable here.</span></li>
+    </ol>
+    <p class="small">The checklist is a reviewer aid. <span class="proposed">Open</span> whether it is stored with the decision is a schema question for LRN-007; do not treat it as decided.</p>
+  </div>
+</div>
+
+<h2 id="required">3.2 Request changes without a comment</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>Decision panel</strong> after submit (client and server both reject)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <div class="error-summary" role="alert" tabindex="-1">
+          <h3>La décision n’a pas été enregistrée</h3>
+          <ul><li><a href="#r2-c">Expliquez à l’auteur ce qu’il faut modifier</a></li></ul>
+        </div>
+        <fieldset style="border:0;padding:0;margin:0 0 1rem">
+          <legend style="font-weight:600">Décision</legend>
+          <label class="check"><input type="radio" name="r2-d"> Approuver la révision 3</label>
+          <label class="check"><input type="radio" name="r2-d" checked> Demander des modifications</label>
+        </fieldset>
+        <div class="field invalid">
+          <label for="r2-c">Commentaire pour l’auteur</label>
+          <span class="error" id="r2-c-e">Un commentaire est obligatoire pour demander des modifications.</span>
+          <textarea id="r2-c" aria-invalid="true" aria-describedby="r2-c-e"></textarea>
+        </div>
+        <button class="btn primary block" type="button">Envoyer : demander des modifications</button>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>Whitespace-only comments count as empty.</li>
+      <li>Focus moves to the error summary; the selected decision and the checklist are preserved.</li>
+      <li>On success: banner "Modifications demandées. L’auteur verra votre commentaire." and return to the queue. The author's view is <a href="editor.html#changes">Flow 2.2</a>.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="self">3.3 Self-approval denied — reviewer opens their own revision</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1024+</strong> · decision controls are not rendered; the server rejects a forced request</figcaption>
+    <div class="frame-scroll">
+    <div class="screen desktop ui short">
+      <div class="ui-bar"><a class="btn quiet" href="#queue">← À relire</a><div class="grow"><strong>Forme algébrique d’un nombre complexe</strong> <span class="status review">En relecture · révision 3</span></div></div>
+      <div class="split" style="min-height:0">
+        <div class="ui-body wide"><p class="caption" style="margin-top:0">Soumise par <strong>vous</strong> le 14 nov. 2026</p><span class="ph w90"></span><span class="ph w60"></span><span class="ph w75"></span></div>
+        <aside>
+          <div class="banner warn" role="note">
+            <h2 style="font-size:1rem;margin:0 0 .25rem">Vous ne pouvez pas relire cette révision</h2>
+            <p class="small">Vous en êtes l’auteur. Une autre personne autorisée en Mathématiques doit l’approuver ou demander des modifications.</p>
+          </div>
+          <p class="small">Statut : en attente d’un autre relecteur.</p>
+        </aside>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>Explanation instead of disabled buttons: disabled controls are skipped by Tab and screen-reader users may never learn why.</li>
+      <li>The same rule applies to administrators who authored the revision.</li>
+      <li>If a decision request is forged, the server returns 403 and records nothing; the UI shows "Action refusée : vous ne pouvez pas approuver votre propre révision."</li>
+      <li>In the queue, own submissions show "Votre leçon" and open this read-only view.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="publish">3.4 After approval — publication is a separate control</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>A.</strong> Approver <em>without</em> <code>publisher</code></figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <p><span class="status approved">Approuvée · révision 3</span></p>
+        <p class="small">Approuvée par vous le 15 nov. 2026.</p>
+        <div class="banner"><p class="small">Pas encore visible par les élèves. Une personne autorisée à publier doit la publier. La révision publiée actuelle (1) reste en ligne.</p></div>
+        <p class="caption">No publish button rendered.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>B.</strong> Person with <code>publisher</code> (may be the approver, a different person, or an admin)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <p><span class="status approved">Approuvée · révision 3</span></p>
+        <p class="small">Approuvée par [Relecteur] le 15 nov. 2026.</p>
+        <section class="panel" aria-labelledby="r4-pub">
+          <h2 id="r4-pub" style="font-size:1rem;margin:0 0 .5rem">Publication</h2>
+          <p class="small">Remplacera la révision publiée 1 pour tous les élèves.</p>
+          <button class="btn primary block" type="button">Publier la révision 3…</button>
+        </section>
+        <p class="caption">Opens a confirmation dialog naming the lesson and both revision numbers. Focus is trapped in the dialog and returns to this button on cancel.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>C.</strong> Publication blocked (published base changed)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <div class="banner err" role="alert">
+          <p><strong>Publication bloquée.</strong></p>
+          <p class="small">La révision 3 a été préparée à partir de la révision publiée 1, mais la révision 4 a été publiée depuis. Rien n’a été remplacé.</p>
+          <p class="small">L’auteur doit préparer une nouvelle révision à partir de la version en ligne ; elle sera relue à nouveau.</p>
+          <a class="btn block" href="#publish">Voir la version en ligne</a>
+        </div>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>Approve and publish are never one button. Approval is a review decision; publication is a separate permission and a separate audited action.</li>
+      <li>There is no "override" button in C: reconciliation goes through a new reviewed revision.</li>
+      <li><span class="proposed">Open</span> Whether an author holding <code>publisher</code> may publish their own lesson after someone else approved it is not explicitly ruled on; this wireframe neither shows nor forbids it. Needs a recorded decision.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="queue">3.5 Reviewer queue (mobile) and empty state</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · only subjects assigned to this reviewer</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui">
+      <div class="ui-bar"><a class="ui-logo" href="#queue">LEARNOO Studio</a></div>
+      <div class="ui-body">
+        <h1 class="lesson-title">À relire</h1>
+        <p class="small muted">Vos matières : Mathématiques</p>
+        <ul style="list-style:none;padding:0;margin:0">
+          <li class="card"><a href="#decision"><strong>Forme algébrique d’un nombre complexe</strong></a><br><span class="caption">Révision 3 · [Auteur] · soumise il y a 2 jours</span> <span class="status review">En relecture</span></li>
+          <li class="card"><a href="#self"><strong>[Titre de leçon]</strong></a><br><span class="caption">Révision 1 · <strong>Votre leçon</strong> — relue par un autre relecteur</span></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>Empty</strong></figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <h1 class="lesson-title">À relire</h1>
+        <p>Aucune révision en attente dans vos matières.</p>
+        <a class="btn block" href="dashboard.html#teacher">Mes leçons</a>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>No reviewer permission</strong> for this subject</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <h1 class="lesson-title">Accès non autorisé</h1>
+        <p>Vous n’êtes pas relecteur pour cette matière.</p>
+        <p class="caption">HTTP 403. Also shown to administrators without a subject assignment.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+</div>
+
+<h2 id="mobile">3.6 Mobile decision screen</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · snapshot then decision, in one column</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui">
+      <div class="ui-bar"><span class="n" aria-hidden="true">1</span><a class="btn icon quiet" href="#queue" aria-label="À relire">←</a><div class="grow small"><strong>Forme algébrique…</strong> <span class="status review">Rév. 3</span></div></div>
+      <div class="ui-body">
+        <span class="n" aria-hidden="true">2</span> <a href="#r7-dec">Aller à la décision</a>
+        <p class="caption">[Auteur] · 14 nov. 2026 · base : révision 1</p>
+        <span class="ph w90"></span><span class="ph w60"></span>
+        <div class="formula">z = 3 + 2i</div>
+        <span class="ph w90"></span><span class="ph w75"></span>
+        <h2 id="r7-dec" class="small" style="font-size:1rem"><span class="n" aria-hidden="true">3</span> Votre décision</h2>
+        <label class="check"><input type="radio" name="r7-d"> Approuver</label>
+        <label class="check"><input type="radio" name="r7-d"> Demander des modifications</label>
+        <div class="field"><label for="r7-c">Commentaire pour l’auteur</label><textarea id="r7-c"></textarea></div>
+        <button class="btn primary block" type="button">Envoyer la décision</button>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>RTL interface: the split view (3.1) swaps sides via logical grid order; snapshot content keeps its own <code>lang</code>/<code>dir</code>.</li>
+      <li>Reviewers can read on a phone, but long math review is expected on desktop <span class="proposed">unverified</span>.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="matrix">Permission states on this screen</h2>
+<div class="table-scroll">
+<table class="matrix">
+  <thead>
+    <tr><th>Who opens a submitted revision in Mathématiques</th><th>Sees snapshot</th><th>Approve / request changes</th><th>Publish after approval</th></tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row">Student</th><td>No (403)</td><td>No</td><td>No</td></tr>
+    <tr><th scope="row">Teacher — <code>author</code> only, not the author</th><td>No (403)</td><td>No</td><td>No</td></tr>
+    <tr><th scope="row">Teacher — author of this revision</th><td>Own read-only view (Flow 2.3)</td><td>No — 3.3</td><td>Open question (3.4 note)</td></tr>
+    <tr><th scope="row">Teacher + Reviewer for Mathématiques, not the author</th><td>Yes</td><td>Yes — 3.1</td><td>Only with <code>publisher</code> — 3.4 A/B</td></tr>
+    <tr><th scope="row">Teacher + Reviewer for another subject only</th><td>No (403)</td><td>No</td><td>Only with <code>publisher</code>, and only once approved</td></tr>
+    <tr><th scope="row">Teacher + Reviewer, author of this revision</th><td>Yes, read-only</td><td>No — 3.3</td><td>Open question</td></tr>
+    <tr><th scope="row">Administrator without Mathématiques review assignment</th><td>Status and metadata <span class="proposed">assumed</span></td><td>No</td><td>Yes (admin holds <code>publisher</code> by default)</td></tr>
+    <tr><th scope="row">Administrator with Mathématiques review assignment, not the author</th><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small">Every row is enforced on the server and every decision/publication is audited with actor, revision, action and time. The UI only reflects the server's answer.</p>
+
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "title": "Fonctionnalités de l’éditeur — test technique",
+  "language": "fr",
+  "status": "unreviewed",
+  "objective": "Document technique non relu, sans contenu pédagogique.",
+  "blocks": [
+    {
+      "type": "heading",
+      "children": [
+        {
+          "type": "text",
+          "text": "Titre de test"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "text": "Texte avec "
+        },
+        {
+          "type": "strong",
+          "children": [
+            {
+              "type": "text",
+              "text": "gras"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": ", formule "
+        },
+        {
+          "type": "math",
+          "text": "a^2+b^2"
+        },
+        {
+          "type": "text",
+          "text": " et "
+        },
+        {
+          "type": "text",
+          "text": "ملاحظة",
+          "lang": "ar",
+          "dir": "rtl"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "displayMath",
+      "text": "\\frac{1}{2}"
+    },
+    {
+      "type": "paragraph",
+      "lang": "ar",
+      "dir": "rtl",
+      "children": [
+        {
+          "type": "text",
+          "text": "فقرة بالعربية مع "
+        },
+        {
+          "type": "math",
+          "text": "z=3+2i"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "children": [
+        {
+          "type": "item",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "premier"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "text": "second"
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "title": "Encadré technique",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Note."
+                    }
+                  ]
+                },
+                {
+                  "type": "exercise",
+                  "title": "Exercice technique",
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "text",
+                          "text": "Question."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "solution",
+                      "children": [
+                        {
+                          "type": "youtube",
+                          "title": "Vidéo à choisir"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

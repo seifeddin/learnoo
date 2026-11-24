@@ -1,0 +1,17 @@
+# Local development database only (LRN-005). Not a deployment file.
+# Bound to loopback; trust authentication means no password is stored here.
+# Never expose this port beyond 127.0.0.1.
+services:
+  postgres:
+    image: postgres:16.13
+    environment:
+      POSTGRES_USER: learnoo
+      POSTGRES_DB: learnoo
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - learnoo-pg:/var/lib/postgresql/data
+      - ./scripts/dev-db-init.sql:/docker-entrypoint-initdb.d/10-test-db.sql:ro
+volumes:
+  learnoo-pg:

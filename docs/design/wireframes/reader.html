@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LRN-002 · Lecteur de leçon (wireframe)</title>
+<link rel="stylesheet" href="../../../web/design/tokens.css">
+<link rel="stylesheet" href="wireframes.css">
+</head>
+<body>
+<a class="skip" href="#doc-main">Aller au contenu du document</a>
+<div class="doc">
+<header>
+  <nav class="crumbs" aria-label="Wireframes"><a href="index.html">Index des wireframes</a><a href="README.md">Notes (README)</a></nav>
+  <h1>Flow 1 — Student lesson reader (mobile first)</h1>
+  <p class="notice"><strong>Wireframe, not production UI.</strong> All lesson text is grey placeholder bars or the labelled formula <code>z = 3 + 2i</code>; no teaching content is invented. Author/reviewer names are placeholders. The reader is the Go server-rendered page; these frames do not change the renderer.</p>
+  <p class="lede">Covers: signed-in student (FR interface), Arabic interface (RTL chrome around a French lesson), visitor gate, unavailable lesson, report-an-error, and the desktop layout. Numbers in black circles are the keyboard / screen-reader order.</p>
+</header>
+<main id="doc-main">
+
+<h2 id="mobile-fr">1.1 Mobile, French interface, signed-in student</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360 × 640+</strong> · reading order follows DOM order top to bottom</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui" lang="fr" dir="ltr">
+      <a class="skip" href="#r1-main">Aller à la leçon</a>
+      <div class="ui-bar">
+        <span class="n" aria-hidden="true">1</span>
+        <a class="ui-logo" href="#r1-main">LEARNOO</a>
+        <span class="grow"></span>
+        <span class="n" aria-hidden="true">2</span>
+        <button class="btn icon quiet" type="button" aria-label="Rechercher">⌕</button>
+        <span class="n" aria-hidden="true">3</span>
+        <button class="btn icon quiet" type="button" aria-expanded="false" aria-label="Menu : sections, matières, chapitres">☰</button>
+      </div>
+      <div class="ui-body" id="r1-main">
+        <nav aria-label="Fil d’Ariane" class="small"><span class="n" aria-hidden="true">4</span> <a href="#r1-main">Mathématiques</a> › <a href="#r1-main">Nombres complexes</a></nav>
+        <h1 class="lesson-title">Forme algébrique d’un nombre complexe</h1>
+        <p class="caption">Rédigé par [Auteur] · Relu par [Relecteur] · <span class="status unreviewed">Exemple non relu</span></p>
+        <div class="row">
+          <span class="n" aria-hidden="true">5</span>
+          <button class="btn" type="button" aria-pressed="false">☆ Enregistrer</button>
+        </div>
+        <h2 class="small" style="margin-block-end:0">Objectif</h2>
+        <span class="ph w90"></span><span class="ph w60"></span>
+        <span class="ph"></span><span class="ph w90"></span><span class="ph w75"></span>
+        <div class="formula" role="math" aria-label="z égale 3 plus 2 i">z = 3 + 2i</div>
+        <span class="ph w90"></span><span class="ph w60"></span>
+        <section class="block-ar" lang="ar" dir="rtl" aria-label="شرح بالعربية">
+          <p class="caption" style="margin:0">شرح بالعربية (اختياري)</p>
+          <span class="ph w90"></span><span class="ph w60"></span>
+          <p style="margin:0">… <bdi dir="ltr" lang="fr">partie réelle</bdi> … <bdi dir="ltr">z = 3 + 2i</bdi> …</p>
+        </section>
+        <div class="video-slot">
+          <span class="n" aria-hidden="true">6</span> Vidéo : aucune vidéo sélectionnée pour l’instant.<br><span class="caption">La leçon reste complète sans vidéo.</span>
+        </div>
+        <h2 class="small">Exercice 1</h2>
+        <span class="ph w90"></span><span class="ph w40"></span>
+        <details class="solution">
+          <summary><span class="n" aria-hidden="true">7</span>&nbsp;Afficher la solution</summary>
+          <span class="ph w90"></span><span class="ph w60"></span>
+        </details>
+        <p><span class="n" aria-hidden="true">8</span> <a href="#r1-main">Signaler une erreur dans cette leçon</a></p>
+      </div>
+      <nav class="ui-foot" aria-label="Leçons du chapitre">
+        <span class="n" aria-hidden="true">9</span>
+        <a class="btn" href="#r1-main">← Précédente</a>
+        <span class="n" aria-hidden="true">10</span>
+        <a class="btn primary" href="#r1-main">Suivante →</a>
+      </nav>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>Annotations</h3>
+    <ol>
+      <li><span class="n">1</span><span>Skip link (first Tab stop, visible on focus) then logo/home. Header stays short (≤ 56px) and scrolls away; no sticky toolbar competing with text on small screens.</span></li>
+      <li><span class="n">2</span><span>Title search (MVP: basic title search, accent-insensitive). Opens a full-screen search page, not an overlay.</span></li>
+      <li><span class="n">3</span><span>Menu exposes the hierarchy section → subject → chapter → lesson. <code>aria-expanded</code> toggles; Escape closes and returns focus to the button.</span></li>
+      <li><span class="n">4</span><span>Breadcrumb gives subject/chapter context before the <code>h1</code>. Author and reviewer credit ships in M1 (placeholders here). The amber "Exemple non relu" chip only appears on technical fixtures and never on published lessons.</span></li>
+      <li><span class="n">5</span><span>Bookmark toggle: <code>aria-pressed</code>, label changes to "★ Enregistré". Bookmarks reference the stable lesson identity, so title changes do not break them.</span></li>
+      <li><span class="n">6</span><span>Honest video placeholder when the teacher has not selected a video. When present: YouTube embed after the written explanation it supports, plus a plain link "Ouvrir sur YouTube".</span></li>
+      <li><span class="n">7</span><span>Worked solutions are native <code>&lt;details&gt;</code>: keyboard (Enter/Space) and no-JS friendly; collapsed by default so students try first.</span></li>
+      <li><span class="n">8</span><span>Report an error (M1, LRN-015) opens the form in 1.5. Placed after the content, before chapter navigation.</span></li>
+      <li><span class="n">9–10</span><span>Previous/next lesson in chapter order. Full-width 44px targets in the thumb zone; the primary action is "next".</span></li>
+    </ol>
+    <p class="small">Formulas: KaTeX output is LTR-isolated and scrolls horizontally inside its block instead of overflowing the page. Body text 17px / 1.7 line-height per DESIGN.md.</p>
+  </div>
+</div>
+
+<h2 id="mobile-ar">1.2 Mobile, Arabic interface (RTL chrome, French lesson)</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360 × 640+</strong> · <code>&lt;html dir="rtl" lang="ar"&gt;</code>; lesson container <code>lang="fr" dir="ltr"</code></figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui" lang="ar" dir="rtl">
+      <div class="ui-bar">
+        <span class="n" aria-hidden="true">1</span>
+        <a class="ui-logo" href="#r2-main" lang="en" dir="ltr">LEARNOO</a>
+        <span class="grow"></span>
+        <span class="n" aria-hidden="true">2</span>
+        <button class="btn icon quiet" type="button" aria-label="بحث">⌕</button>
+        <span class="n" aria-hidden="true">3</span>
+        <button class="btn icon quiet" type="button" aria-expanded="false" aria-label="القائمة">☰</button>
+      </div>
+      <div class="ui-body" id="r2-main">
+        <nav aria-label="مسار التنقل" class="small"><span class="n" aria-hidden="true">4</span> <a href="#r2-main" lang="fr" dir="ltr">Mathématiques</a> › <a href="#r2-main" lang="fr" dir="ltr">Nombres complexes</a></nav>
+        <article lang="fr" dir="ltr">
+          <h1 class="lesson-title">Forme algébrique d’un nombre complexe</h1>
+          <p class="caption">Rédigé par [Auteur] · Relu par [Relecteur]</p>
+        </article>
+        <div class="row">
+          <span class="n" aria-hidden="true">5</span>
+          <button class="btn" type="button" aria-pressed="true">★ محفوظ</button>
+        </div>
+        <article lang="fr" dir="ltr">
+          <span class="ph w90"></span><span class="ph w60"></span>
+          <div class="formula">z = 3 + 2i</div>
+          <span class="ph w90"></span><span class="ph w75"></span>
+          <section class="block-ar" lang="ar" dir="rtl">
+            <span class="ph w90"></span><span class="ph w60"></span>
+          </section>
+          <span class="ph w90"></span>
+        </article>
+        <p><span class="n" aria-hidden="true">6</span> <a href="#r2-main">الإبلاغ عن خطأ في هذا الدرس</a></p>
+      </div>
+      <nav class="ui-foot" aria-label="دروس الفصل">
+        <span class="n" aria-hidden="true">7</span>
+        <a class="btn" href="#r2-main"><span aria-hidden="true">→</span> السابق</a>
+        <span class="n" aria-hidden="true">8</span>
+        <a class="btn primary" href="#r2-main">التالي <span aria-hidden="true">←</span></a>
+      </nav>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>RTL rules shown</h3>
+    <ol>
+      <li><span class="n">A</span><span>Interface language is independent of lesson language. Chrome (header, breadcrumb separators, bookmark label, footer) mirrors; the French lesson keeps <code>dir="ltr"</code> and left-aligned text.</span></li>
+      <li><span class="n">B</span><span>Logical CSS only (<code>margin-inline-*</code>, <code>inset-inline-*</code>, <code>border-inline-start</code>). The Arabic explanation rule sits on the inline-start edge in both directions.</span></li>
+      <li><span class="n">C</span><span>Directional arrows mirror: "previous" points right (→) in RTL, "next" points left (←); arrows are separate <code>aria-hidden</code> items so they sit on the outer edge. The breadcrumb "›" is a bidi-mirrored glyph and flips automatically. Order stays previous → next in DOM, so Tab order follows visual reading direction.</span></li>
+      <li><span class="n">D</span><span>French terms inside Arabic text and formulas inside Arabic paragraphs are wrapped in <code>&lt;bdi&gt;</code> / <code>dir="ltr"</code> so punctuation does not jump.</span></li>
+      <li><span class="n">E</span><span>Arabic uses its fallback font stack, normal letter-spacing and 1.9 line-height (token <code>--learnoo-leading-arabic</code>).</span></li>
+    </ol>
+    <p class="small"><span class="proposed">Unverified</span> Arabic interface strings here are placeholders and need review by a native speaker before LRN-023.</p>
+  </div>
+</div>
+
+<h2 id="visitor">1.3 Visitor (not signed in)</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · catalogue is public; full lessons require an account (§2.2)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-bar"><a class="ui-logo" href="#r3-main">LEARNOO</a><span class="grow"></span><a class="btn quiet" href="registration.html#login">Se connecter</a></div>
+      <div class="ui-body" id="r3-main">
+        <p class="small"><a href="#r3-main">Mathématiques</a> › <a href="#r3-main">Nombres complexes</a></p>
+        <h1 class="lesson-title">Forme algébrique d’un nombre complexe</h1>
+        <p class="caption">Rédigé par [Auteur] · Relu par [Relecteur]</p>
+        <div class="banner info" role="region" aria-labelledby="r3-gate">
+          <p id="r3-gate"><strong>Créez un compte gratuit pour lire cette leçon.</strong></p>
+          <p class="small">Les leçons, exercices et solutions sont réservés aux élèves inscrits. L’inscription est gratuite.</p>
+          <div class="stack">
+            <a class="btn primary block" href="registration.html">Créer un compte</a>
+            <a class="btn block" href="registration.html#login">J’ai déjà un compte</a>
+          </div>
+        </div>
+        <p class="small muted">Après connexion, l’élève revient sur cette leçon (retour à l’URL d’origine).</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>Notes</h3>
+    <ul class="small">
+      <li>Visitor sees title, chapter context and credit, but no lesson body (no partial preview is assumed; that would be a product decision).</li>
+      <li>During the internal pilot registration is invitation-only: "Créer un compte" becomes "Inscription sur invitation" with an explanation (see Flow 4).</li>
+      <li>Return-to URL must be validated server-side as a same-site path (open-redirect safety).</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="states">1.4–1.5 Error and empty states</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1.4 Lesson unavailable</strong> (unpublished, withdrawn, or bookmarked lesson removed)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-bar"><a class="ui-logo" href="#r4-main">LEARNOO</a></div>
+      <div class="ui-body" id="r4-main">
+        <h1 class="lesson-title">Cette leçon n’est pas disponible</h1>
+        <p>Elle a peut-être été retirée temporairement pour correction. Votre signet est conservé et la leçon réapparaîtra dans votre tableau de bord si elle est republiée.</p>
+        <div class="stack">
+          <a class="btn primary block" href="#r4-main">Voir le chapitre</a>
+          <a class="btn block" href="dashboard.html">Mon tableau de bord</a>
+        </div>
+        <p class="caption">HTTP 404/410 with the same page shell. No reason detail is leaked to students.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>1.5 Report an error</strong> · submit with empty description (validation shown)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-bar"><a class="btn quiet" href="#r1-main">← Retour à la leçon</a></div>
+      <form class="ui-body" id="r5-main" onsubmit="return false">
+        <h1 class="lesson-title">Signaler une erreur</h1>
+        <p class="small muted">Leçon : Forme algébrique d’un nombre complexe</p>
+        <div class="error-summary" role="alert" tabindex="-1">
+          <h3>Le signalement n’a pas été envoyé</h3>
+          <ul><li><a href="#r5-desc">Décrivez l’erreur</a></li></ul>
+        </div>
+        <div class="field">
+          <label for="r5-where">Où se trouve l’erreur ? (facultatif)</label>
+          <select id="r5-where"><option>Texte de la leçon</option><option>Formule</option><option>Exercice ou solution</option><option>Vidéo</option><option>Autre</option></select>
+        </div>
+        <div class="field invalid">
+          <label for="r5-desc">Description</label>
+          <span class="error" id="r5-desc-err">Décrivez l’erreur pour l’envoyer.</span>
+          <textarea id="r5-desc" aria-describedby="r5-desc-err" aria-invalid="true"></textarea>
+        </div>
+        <button class="btn primary block" type="submit">Envoyer le signalement</button>
+        <p class="caption">Success: confirmation banner "Merci, votre signalement a été transmis." and return to lesson. Handling of reports by reviewers/admins is out of scope here.</p>
+      </form>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>State rules</h3>
+    <ul class="small">
+      <li>Error summary receives focus on failed submit, links to the field; field keeps entered text (GOV.UK pattern, DESIGN.md).</li>
+      <li>Network failure while loading: server-rendered page means the browser's own error page; on form submit failure, keep input and show "Impossible d’envoyer pour le moment. Réessayez."</li>
+      <li>KaTeX failure: readable source fallback inside the formula block (already exercised by <code>failure.json</code>).</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="desktop">1.6 Desktop</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1024+</strong> · 48rem reading column; chapter navigation in a side column</figcaption>
+    <div class="frame-scroll">
+    <div class="screen desktop ui">
+      <div class="ui-bar">
+        <span class="n" aria-hidden="true">1</span><a class="ui-logo" href="#r6-main">LEARNOO</a>
+        <span class="n" aria-hidden="true">2</span>
+        <div class="field grow" style="margin:0;max-width:24rem"><label class="vh" for="r6-q">Rechercher une leçon</label><input id="r6-q" type="search" placeholder="Rechercher une leçon"></div>
+        <span class="grow"></span>
+        <span class="n" aria-hidden="true">3</span><a class="btn quiet" href="dashboard.html">Mes signets</a>
+        <span class="n" aria-hidden="true">4</span><button class="btn quiet" type="button" aria-haspopup="menu">Compte ▾</button>
+      </div>
+      <div class="sidebar-layout">
+        <nav aria-label="Chapitre : Nombres complexes">
+          <span class="n" aria-hidden="true">5</span>
+          <p class="caption" style="margin-block-start:0">Mathématiques › Nombres complexes</p>
+          <ol class="small" style="padding-inline-start:1.2rem">
+            <li><a href="#r6-main" aria-current="page"><strong>Forme algébrique</strong></a></li>
+            <li><a href="#r6-main">[Leçon 2]</a></li>
+            <li><a href="#r6-main">[Leçon 3]</a></li>
+          </ol>
+        </nav>
+        <div class="ui-body wide" id="r6-main" style="max-width:48rem">
+          <span class="n" aria-hidden="true">6</span>
+          <h1 class="lesson-title">Forme algébrique d’un nombre complexe</h1>
+          <div class="row"><p class="caption" style="margin:0">Rédigé par [Auteur] · Relu par [Relecteur]</p><span class="grow"></span><span class="n" aria-hidden="true">7</span><button class="btn" type="button" aria-pressed="true">★ Enregistré</button></div>
+          <span class="ph w90"></span><span class="ph"></span><span class="ph w60"></span>
+          <div class="formula">z = 3 + 2i</div>
+          <span class="ph w90"></span><span class="ph w75"></span><span class="ph w40"></span>
+          <div class="row" style="justify-content:space-between;margin-block-start:2rem"><span class="n" aria-hidden="true">8</span><a class="btn" href="#r6-main">← Précédente</a><a class="btn primary" href="#r6-main">Suivante →</a></div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>Desktop deltas</h3>
+    <ul class="small">
+      <li>Search field inline in the header; bookmarks and account menu visible instead of hidden in the menu.</li>
+      <li>Chapter navigation (<span class="n" aria-hidden="true">5</span>) comes before the lesson in DOM so screen-reader users get context; the skip link jumps past it straight to <span class="n" aria-hidden="true">6</span>. <code>aria-current="page"</code> marks the open lesson.</li>
+      <li>In RTL the side column moves to the right automatically via the grid's logical order; no separate layout.</li>
+      <li>Role-specific header entries (Studio, Relecture, Administration) are defined in Flow 5 (dashboard).</li>
+    </ul>
+  </div>
+</div>
+
+</main>
+</div>
+</body>
+</html>

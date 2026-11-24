@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LRN-002 · Inscription et connexion (wireframe)</title>
+<link rel="stylesheet" href="../../../web/design/tokens.css">
+<link rel="stylesheet" href="wireframes.css">
+</head>
+<body>
+<a class="skip" href="#doc-main">Aller au contenu du document</a>
+<div class="doc">
+<header>
+  <nav class="crumbs" aria-label="Wireframes"><a href="index.html">Index des wireframes</a><a href="README.md">Notes (README)</a></nav>
+  <h1>Flow 4 — Student registration and sign-in</h1>
+  <p class="notice"><strong>Wireframe, not production UI.</strong> Several policies are still open (CAHIER_DES_CHARGES §3.3): privacy policy, retention and deletion, email verification, and how minors register. Those parts are marked <span class="proposed">Open decision</span> and must not be implemented as shown without a recorded decision.</p>
+  <p class="lede">Covers: invited pilot registration (M1), public self-registration (M3), validation errors, sign-in with enumeration-safe errors and rate limiting, the Arabic interface, and desktop.</p>
+</header>
+<main id="doc-main">
+
+<h2 id="pilot">4.1 Internal pilot — invitation link (M1)</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · opened from an invitation link</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui">
+      <div class="ui-bar"><span class="n" aria-hidden="true">1</span><a class="ui-logo" href="#pilot">LEARNOO</a><span class="grow"></span><span class="n" aria-hidden="true">2</span><button class="btn quiet" type="button" aria-haspopup="menu" lang="ar">العربية</button></div>
+      <form class="ui-body" onsubmit="return false" aria-labelledby="g1-h">
+        <h1 class="lesson-title" id="g1-h">Activer votre compte</h1>
+        <p class="small muted">Vous avez été invité·e au pilote Learnoo.</p>
+        <div class="field"><label for="g1-mail">Adresse e-mail</label><input id="g1-mail" type="email" value="eleve@example.test" readonly aria-describedby="g1-mail-h"><span class="hint" id="g1-mail-h">Fixée par l’invitation.</span></div>
+        <div class="field"><label for="g1-name"><span class="n" aria-hidden="true">3</span> Prénom ou pseudonyme</label><span class="hint" id="g1-name-h">Visible seulement par vous. Pas de profil public.</span><input id="g1-name" autocomplete="nickname" aria-describedby="g1-name-h"></div>
+        <div class="field"><label for="g1-pw"><span class="n" aria-hidden="true">4</span> Mot de passe</label><span class="hint" id="g1-pw-h">Au moins [N] caractères.</span><input id="g1-pw" type="password" autocomplete="new-password" aria-describedby="g1-pw-h" dir="ltr"><button class="btn quiet" type="button" aria-pressed="false" aria-controls="g1-pw">Afficher le mot de passe</button></div>
+        <div class="field"><label for="g1-sec"><span class="n" aria-hidden="true">5</span> Section du BAC (facultatif)</label><select id="g1-sec"><option value="">Choisir plus tard</option><option>Mathématiques</option></select><span class="hint">Sert seulement à proposer les bons chapitres.</span></div>
+        <label class="check small"><span class="n" aria-hidden="true">6</span> <input type="checkbox"> J’ai lu la <a href="#pilot">politique de confidentialité</a> <span class="proposed">Open decision</span></label>
+        <span class="n" aria-hidden="true">7</span>
+        <button class="btn primary block" type="submit">Activer mon compte</button>
+      </form>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>Invitation invalid or expired</strong></figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <h1 class="lesson-title">Ce lien d’invitation ne fonctionne plus</h1>
+        <p>Il a peut-être expiré ou a déjà été utilisé. Demandez un nouveau lien à la personne qui vous a invité·e.</p>
+        <a class="btn block" href="#login">Se connecter</a>
+        <p class="caption">Same message for unknown, expired and used tokens.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <h3>Annotations</h3>
+    <ol>
+      <li><span class="n">1–2</span><span>Interface language switch is reachable before the form; it changes the UI language only.</span></li>
+      <li><span class="n">3</span><span>Minimal personal data: one display name, no surname, school, phone, birth date or photo.</span></li>
+      <li><span class="n">4</span><span>Password with show/hide toggle (<code>aria-pressed</code>); input stays LTR in both interfaces. The exact length rule belongs to LRN-005.</span></li>
+      <li><span class="n">5</span><span>Optional BAC section, skippable; only used for navigation shortcuts.</span></li>
+      <li><span class="n">6</span><span>Consent wording depends on the privacy policy, which does not exist yet.</span></li>
+      <li><span class="n">7</span><span>On success the student lands on the dashboard (Flow 5) or the lesson they came from.</span></li>
+    </ol>
+  </div>
+</div>
+
+<h2 id="public">4.2 Public self-registration (M3) with validation errors</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · after a failed submit</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui">
+      <div class="ui-bar"><a class="ui-logo" href="#public">LEARNOO</a><span class="grow"></span><a class="btn quiet" href="#login">Se connecter</a></div>
+      <form class="ui-body" onsubmit="return false">
+        <h1 class="lesson-title">Créer un compte gratuit</h1>
+        <div class="error-summary" role="alert" tabindex="-1">
+          <h3>Le compte n’a pas été créé</h3>
+          <ul>
+            <li><a href="#g2-mail">Saisissez une adresse e-mail valide, par exemple nom@exemple.tn</a></li>
+            <li><a href="#g2-pw">Le mot de passe doit contenir au moins [N] caractères</a></li>
+          </ul>
+        </div>
+        <div class="field invalid"><label for="g2-mail">Adresse e-mail</label><span class="error" id="g2-mail-e">Saisissez une adresse e-mail valide, par exemple nom@exemple.tn</span><input id="g2-mail" type="email" value="eleve@" aria-invalid="true" aria-describedby="g2-mail-e" autocomplete="email" dir="ltr"></div>
+        <div class="field"><label for="g2-name">Prénom ou pseudonyme</label><input id="g2-name" value="[Prénom]"></div>
+        <div class="field invalid"><label for="g2-pw">Mot de passe</label><span class="error" id="g2-pw-e">Le mot de passe doit contenir au moins [N] caractères</span><input id="g2-pw" type="password" aria-invalid="true" aria-describedby="g2-pw-e" autocomplete="new-password" dir="ltr"></div>
+        <div class="banner warn small"><p><strong>Élèves mineurs</strong> <span class="proposed">Open decision</span> : âge minimum, accord parental éventuel et durée de conservation à définir avant l’ouverture publique.</p></div>
+        <button class="btn primary block" type="submit">Créer mon compte</button>
+      </form>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>After submit</strong> (same screen whether or not the address already has an account)</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <h1 class="lesson-title">Vérifiez votre boîte mail</h1>
+        <p>Nous avons envoyé un message à <strong dir="ltr">eleve@exemple.tn</strong> pour continuer.</p>
+        <p class="small muted">Rien reçu après quelques minutes ? Vérifiez les courriers indésirables, puis <a href="#public">renvoyez le message</a>.</p>
+        <p class="caption"><span class="proposed">Open decision</span> Email verification before the first lesson is undecided (IMPLEMENTATION_PLAN "Email verification policy"). Alternative B: sign in immediately with a banner "Confirmez votre adresse e-mail" on the dashboard. Prototype both before choosing.</p>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>Error summary receives focus; each link moves to its field; entered values are kept except the password.</li>
+      <li>"Email already used" is never shown on the form (account enumeration). The existing owner receives an email instead. This depends on the email-verification decision.</li>
+      <li>Self-registration abuse controls (rate limits, possibly a challenge) belong to LRN-022 and are not drawn.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="login">4.3 Sign in, errors, rate limit</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · wrong credentials</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <form class="ui-body" onsubmit="return false">
+        <h1 class="lesson-title">Se connecter</h1>
+        <div class="error-summary" role="alert" tabindex="-1"><h3>Adresse e-mail ou mot de passe incorrect.</h3></div>
+        <div class="field"><label for="g3-mail">Adresse e-mail</label><input id="g3-mail" type="email" value="eleve@exemple.tn" autocomplete="username" dir="ltr"></div>
+        <div class="field"><label for="g3-pw">Mot de passe</label><input id="g3-pw" type="password" autocomplete="current-password" dir="ltr"></div>
+        <button class="btn primary block" type="submit">Se connecter</button>
+        <p><a href="#login">Mot de passe oublié ?</a></p>
+        <p class="small">Pas encore de compte ? <a href="#public">Créer un compte</a></p>
+      </form>
+    </div>
+    </div>
+  </figure>
+  <figure class="frame">
+    <figcaption><strong>Too many attempts</strong></figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short">
+      <div class="ui-body">
+        <h1 class="lesson-title">Se connecter</h1>
+        <div class="banner err" role="alert"><p><strong>Trop de tentatives.</strong> Réessayez dans quelques minutes ou réinitialisez votre mot de passe.</p></div>
+        <a class="btn block" href="#login">Mot de passe oublié ?</a>
+      </div>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>One generic message for unknown email and wrong password (enumeration-safe, LRN-005).</li>
+      <li>Password recovery always answers "Si un compte existe pour cette adresse, un e-mail a été envoyé."</li>
+      <li>Session is rotated on sign-in; this has no visible UI.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="rtl">4.4 Arabic interface</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>360</strong> · <code>dir="rtl"</code>; email and password fields forced LTR</figcaption>
+    <div class="frame-scroll">
+    <div class="screen phone ui short" lang="ar" dir="rtl">
+      <div class="ui-bar"><a class="ui-logo" href="#rtl" lang="en" dir="ltr">LEARNOO</a><span class="grow"></span><button class="btn quiet" type="button" lang="fr">Français</button></div>
+      <form class="ui-body" onsubmit="return false">
+        <h1 class="lesson-title">إنشاء حساب مجاني</h1>
+        <div class="field"><label for="g4-mail">البريد الإلكتروني</label><input id="g4-mail" type="email" dir="ltr" autocomplete="email"></div>
+        <div class="field"><label for="g4-name">الاسم أو اسم مستعار</label><input id="g4-name"></div>
+        <div class="field"><label for="g4-pw">كلمة المرور</label><input id="g4-pw" type="password" dir="ltr" autocomplete="new-password"></div>
+        <button class="btn primary block" type="submit">إنشاء الحساب</button>
+      </form>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations">
+    <ul class="small">
+      <li>Labels, hints and errors align to the inline start (right). Email and password values are typed LTR; the display name follows the text the student types (<code>dir="auto"</code> in implementation).</li>
+      <li><span class="proposed">Unverified</span> Arabic copy needs native-speaker review (LRN-023).</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="desktop">4.5 Desktop</h2>
+<div class="frames">
+  <figure class="frame">
+    <figcaption><strong>1024+</strong> · the same single-column form, max 28rem, centred</figcaption>
+    <div class="frame-scroll">
+    <div class="screen desktop ui short">
+      <div class="ui-bar"><a class="ui-logo" href="#desktop">LEARNOO</a><span class="grow"></span><button class="btn quiet" type="button" lang="ar">العربية</button><a class="btn" href="#login">Se connecter</a></div>
+      <form class="ui-body" style="max-width:28rem;margin:2rem auto" onsubmit="return false">
+        <h1 class="lesson-title">Créer un compte gratuit</h1>
+        <div class="field"><label for="g5-mail">Adresse e-mail</label><input id="g5-mail" type="email" dir="ltr"></div>
+        <div class="field"><label for="g5-name">Prénom ou pseudonyme</label><input id="g5-name"></div>
+        <div class="field"><label for="g5-pw">Mot de passe</label><input id="g5-pw" type="password" dir="ltr"></div>
+        <button class="btn primary block" type="submit">Créer mon compte</button>
+      </form>
+    </div>
+    </div>
+  </figure>
+  <div class="annotations"><p class="small">No two-column form on desktop: one column keeps the Tab order identical to the visual order in both directions.</p></div>
+</div>
+
+</main>
+</div>
+</body>
+</html>

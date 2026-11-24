@@ -6,6 +6,8 @@ Planning feedback, issue discussions, and expressions of interest are welcome. A
 
 ## Development workflow
 
+Follow the [working protocol](docs/CAHIER_DES_CHARGES.md#5-working-protocol-for-contributors-and-ai-agents): get assigned on the GitHub issue before starting, keep shared contracts in their documented home, and end every pull request with a handoff.
+
 Use focused branches and pull requests. Describe the problem, resulting behavior, relevant acceptance criteria, and validation. The maintainer reviews merges. CODEOWNERS requests review; repository protection settings must separately enforce it.
 
 Tests should cover meaningful risks: authorization, submitted-content immutability, publication races, lesson withdrawal, rendering safety, and recovery. Avoid broad scaffolding or unrelated dependencies. Document runnable setup when the prototype exists.
@@ -21,6 +23,10 @@ Optional UI/UX skills and pinned upstream licenses are listed in [recommended sk
 ## Educational workflow
 
 Teachers will use Studio, not GitHub. Content must have a curriculum objective, clear explanation, sources/rights information, and a different qualified reviewer. AI-generated material is subject to the same review requirements.
+
+## No AI attribution
+
+You may use AI tools, but commits, pull requests and comments must not credit them: no AI `Co-Authored-By` trailers, no "Generated with" footers, no AI author or committer identity. Keep commit messages to one short, plain line. The `verify` check fails otherwise. Claude Code users get this by default from the project's `.claude/settings.json`; configure other tools to match.
 
 ## Collaboration
 

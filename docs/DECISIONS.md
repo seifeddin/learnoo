@@ -11,6 +11,7 @@ Baseline: PROJECT_PLAN.md and IMPLEMENTATION_PLAN.md. Updated 2026-11-23. This f
 - Immutable submitted lesson snapshots including exercises, immutable media, transactional publication, audited withdrawal/restoration.
 - Pilot: Tunisian BAC Mathematics section, mathematics subject; invited internal users first.
 - GitHub for developers; Studio for teachers.
+- Role model (confirmed 2026-11-24): Student / Teacher / Admin account types over independently granted `author`, subject-scoped `reviewer`, `publisher` and `administrator` permissions. See [Role model](#role-model).
 
 ## Open decisions
 
@@ -93,3 +94,35 @@ On 2026-11-23 the maintainer requested a landing page depicting the populated fu
 ## Shared Blue and Slate palette and prototype fixes
 
 On 2026-11-23 the maintainer approved replacing the temporary direct Udemy palette with Learnoo semantic tokens derived from Radix Blue/Slate, plus Amber/Grass/Red statuses. This supersedes the earlier direct Refero-export adoption. Both reader and catalogue deliberately use the shared system; unreviewed warnings have independent amber tokens. Refero exports remain ignored local references, with no build or runtime dependency. The served wordmark is a 12 KB WebP. Arabic headings and inline punctuation are corrected, and browser tests always start an isolated server on a configurable test port (default 18080). These changes do not establish production accessibility or teacher validation.
+
+## Studio editor adapter (LRN-003)
+
+The Studio keeps its own TipTap schema and converts to and from the restricted lesson JSON through a validated adapter, so the shared schema stays at version 1 with no fixture change. The mapping was posted on issue 3 before implementation. The Go renderer remains the only renderer: the Studio shows TeX source while editing and previews through `POST /preview`. A TypeScript port of `rendering.Validate` checks exports; shared contract cases keep it in parity with Go. The adapter is deliberately stricter than Go for attributes the reader ignores, so it never discards them silently. Pasted HTML is filtered: supported text, marks, math and language spans are kept; scripts, embeds and non-allowlisted images are removed and reported. Saves are browser-local; accounts, server drafts and publication remain later tasks. `web/studio` has its own lockfile; CI installs, typechecks, tests and builds it.
+
+## Application server foundation (LRN-005)
+
+Implementer choices for the foundation slice on 2026-11-24 (role model still open; nothing here grants or checks permissions):
+
+- `cmd/server` is separate from `cmd/renderer`; the renderer stays an isolated loopback experiment. The server also binds only to loopback until deployment work defines TLS and the trusted proxy chain.
+- PostgreSQL 16 through `pgx/v5`. Migrations use a small embedded runner (per-file transaction, advisory lock, SHA-256 checksums that reject edited, unknown or out-of-order history) instead of an external migration tool, to avoid a dependency for about 150 lines of logic.
+- Passwords: Argon2id from `golang.org/x/crypto/argon2`, PHC string format, OWASP minimum cost (19 MiB, t=2, p=1) chosen for the shared server's memory. Parameters are stored per hash, so they can be raised later. Unknown and disabled accounts are verified against a dummy hash to keep timing and responses identical.
+- Sessions: 256-bit random tokens; only their SHA-256 is stored. Cookie `__Host-learnoo_session`, `HttpOnly`, `Secure`, `SameSite=Lax`. Idle timeout 24 hours, absolute 14 days. Login always issues a new token and revokes any presented session; logout deletes the row.
+- CSRF: Go's `http.CrossOriginProtection` on every unsafe request (including login), plus a per-session token in `X-CSRF-Token` for authenticated mutations. Login accepts only `application/json`.
+- Throttling in PostgreSQL (no Redis): attempts are recorded before the password check under per-key advisory locks; more than 5 per email or 30 per client address in a sliding 15-minute window returns 429. Keys are stored as SHA-256 hashes, not raw emails or addresses. Accepted risk: an attacker can temporarily lock a known email out; revisit with LRN-022 public-launch hardening.
+- `create-user` reads the password from stdin and creates an account without roles; it is an operator tool, not registration. Role grants remain LRN-013.
+
+## Exact-key JSON decoding (issue 41)
+
+Go's `encoding/json` matches keys to struct fields case-insensitively, including Unicode folding (`ſrc` fills `src`, the Kelvin sign U+212A matches `k`), and keeps the last of duplicate keys. A lesson could then carry an allowed `src` that Go validated beside an unsafe one that an exact-key reader would use. From 2026-11-24, lesson JSON (`rendering.Decode`) and the login request go through `internal/strictjson`: keys must equal a field's JSON name byte for byte, each key appears once per object at every level, and only whitespace may follow the single value. The Studio's `parseLesson` applies the same rules; shared contract cases cover them. This is stricter validation only: `schemaVersion` stays 1 and every existing fixture and export is unchanged. Later JSON endpoints should decode through the same package.
+
+## Role model
+
+Confirmed by the maintainer on 2026-11-24, as proposed in [CAHIER_DES_CHARGES.md §2](CAHIER_DES_CHARGES.md#2-users-and-access-levels). Users see three account types; the server stores and checks four independent permissions.
+
+| Account type | Default permissions | Optional grants |
+| --- | --- | --- |
+| Student | none (authenticated learner) | — |
+| Teacher | `author` | `reviewer` per subject; `publisher` |
+| Administrator | `administrator`, `publisher`, `author` | `reviewer` per subject |
+
+Each permission is granted and checked separately on the server. Reviewing never implies publishing. Nobody approves their own revision. Administrators review educational content only in subjects they are assigned to. This unblocks the permission tables and default grants in LRN-005 and the role administration CLI (LRN-013).

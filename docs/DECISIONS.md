@@ -67,6 +67,8 @@ The renderer experiment may use a clearly labeled, unreviewed handwritten JSON f
 
 ## Renderer experiment fixture
 
+The maintainer clarified the scientific-content language policy: French is the primary instructional language for BAC scientific subjects; teachers may explain in Arabic or Tunisian dialect with scientific terminology retained in French. This is distinct from interface localization and separate translated lessons. Do not force Arabic into every scientific lesson; use separate fixtures for technical directionality coverage.
+
 Use complex numbers (algebraic form and modulus) provisionally for the technical test. The sample is French; intentionally mixed Arabic/French content lives in a separate RTL fixture. This does not select the first published chapter or claim teacher approval. The initial video slot has no chosen video.
 
 The prototype schema is a small typed JSON format; TipTap compatibility remains to be implemented and tested in LRN-003. The initial program is bound to loopback and is not the authenticated learning platform.

@@ -10,6 +10,7 @@ Provide free, trustworthy Tunisian BAC learning materials maintained by voluntee
 - Email/password and recovery for public launch; email-verification gating remains undecided.
 - Student bookmarks, subject/chapter navigation, basic title search, mobile lesson reader.
 - French and Arabic interface/content support; interface language is independent of lesson language. Mixed-direction text and mathematics must work.
+- Scientific lessons use French as the primary instructional language. Teachers may explain in Arabic or Tunisian dialect while retaining scientific keywords in French; Arabic explanation is optional, not a requirement for every lesson.
 - Written explanations remain useful without video. Videos use YouTube, which remains independently accessible outside Learnoo.
 - Invited authors, subject-authorized reviewers, publishers, and administrators have distinct permissions. A user may hold multiple permissions.
 - Author cannot approve their own revision. A separate reviewer may also publish.

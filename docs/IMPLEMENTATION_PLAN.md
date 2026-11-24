@@ -234,7 +234,7 @@ Whichever option is chosen must support:
 1. Studio preview requests.
 2. Publication.
 3. Regeneration of previously rendered content.
-4. French and Arabic text.
+4. French scientific content, with optional Arabic/Tunisian-dialect explanations retaining French scientific terms; a separate fixture covers mixed-direction stress cases.
 5. Mixed-direction paragraphs.
 6. Inline and block mathematics.
 7. Images.
@@ -392,7 +392,7 @@ The first real lesson should demonstrate:
 - One BAC section.
 - One subject.
 - One topic.
-- French and Arabic text.
+- French scientific content; optional Arabic/Tunisian-dialect explanations retain French scientific terms. Test mixed-direction support separately when the lesson does not need such explanations.
 - Mathematical expressions.
 - One educational image.
 - One YouTube video.
@@ -473,7 +473,7 @@ The first milestone is an end-to-end demonstration.
 
 1. An invited author signs in.
 2. The author creates a real educational lesson.
-3. The lesson contains mixed French/Arabic text, formulas, an image, a video and an exercise.
+3. The lesson contains French scientific content, formulas, an image, a video and an exercise. Arabic/Tunisian-dialect explanations are optional and retain French scientific terms; verify mixed-direction rendering with a separate fixture if needed.
 4. The author saves and previews the lesson.
 5. The author submits the lesson for review.
 6. A different authorized reviewer requests a correction with a comment.

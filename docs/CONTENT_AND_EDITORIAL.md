@@ -8,6 +8,12 @@ Submitted snapshots include title, objectives, prerequisites, content JSON/schem
 
 A lesson has stable identity, language, translation group, archive state, and published revision pointer. Bookmarks reference that stable identity. Translations have separate records and review histories. Titles must not break URLs; use stable resolution or redirects.
 
+## Scientific lesson language
+
+For Learnoo's Tunisian BAC scientific subjects, French is the primary instructional language: lesson titles, scientific terminology, definitions, notation and exercises use French. Teachers may explain in Arabic or Tunisian dialect, including in videos or supporting written explanations, while retaining scientific keywords in French. These explanations remain subject to the same educational review.
+
+Do not add Arabic solely to make a lesson bilingual. Use it where the teacher considers it helpful; keep artificial mixed-direction stress cases in separate technical fixtures. Interface language is independent of lesson language, and Arabic explanations do not automatically make a French scientific lesson a separate Arabic translation.
+
 ## Workflow and permissions
 
 Draft → in review → approved. A reviewer can instead request changes with a required comment; corrections are a new revision. Submitted content is immutable. Workflow status and recorded decisions can change separately.

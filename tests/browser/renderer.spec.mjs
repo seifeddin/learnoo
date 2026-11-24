@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 const fixture=JSON.parse(readFileSync('internal/rendering/fixtures/complex-numbers.json','utf8'));
-test('mobile formulas, RTL and solutions remain usable',async({page})=>{
+test('mobile formulas, RTL and solutions remain usable',async({page,baseURL})=>{
  await page.setViewportSize({width:390,height:844});
- const external=[];page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8080'))external.push(r.url());});
+ const external=[];page.on('request',r=>{if(new URL(r.url()).origin !== new URL(baseURL).origin)external.push(r.url());});
  await page.goto('/lesson');await expect(page.locator('.katex').first()).toBeVisible();
  expect(await page.evaluate(()=>window.learnooMetrics.errors)).toBe(0);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
@@ -42,4 +42,30 @@ test('measure cold mobile payload and desktop rendering',async({page})=>{
  await test.info().attach('mobile-metrics',{body:JSON.stringify(metrics,null,2),contentType:'application/json'});
  const {writeFileSync}=await import('node:fs');writeFileSync('test-results/mobile-metrics.json',JSON.stringify(metrics,null,2));
  await page.setViewportSize({width:1440,height:1000});await page.screenshot({path:'test-results/lesson-desktop.png',fullPage:true});
+});
+
+test('reader preserves inline punctuation, warning contrast roles and Arabic heading rhythm', async ({ browser, baseURL }) => {
+ const context = await browser.newContext({ javaScriptEnabled: false });
+ const page = await context.newPage();
+ await page.goto(`${baseURL}/lesson`);
+ const text = await page.locator('article p').first().textContent();
+ expect(text).toContain('z=a+bi, où');
+ expect(text).not.toContain('z=a+bi ,');
+ const warning = await page.locator('.notice').evaluate(el => {
+  const style=getComputedStyle(el);const root=getComputedStyle(document.documentElement);
+  return { color:style.color, background:style.backgroundColor, token:root.getPropertyValue('--learnoo-color-warning-background').trim(), surface:root.getPropertyValue('--learnoo-color-surface').trim() };
+ });
+ expect(warning.token).not.toBe(warning.surface);
+ expect(warning.color).not.toBe(warning.background);
+ const link = page.getByRole('link', {name:'Leçon',exact:true});
+ const normal = await link.evaluate(el => getComputedStyle(el).color);
+ await link.hover();
+ expect(await link.evaluate(el => getComputedStyle(el).color)).not.toBe(normal);
+ await link.focus();
+ expect(await link.evaluate(el => getComputedStyle(el).outlineWidth)).toBe('3px');
+ await page.goto(`${baseURL}/bidi`);
+ const heading = page.locator('h1:lang(ar)').first();
+ const rhythm = await heading.evaluate(el => { const s=getComputedStyle(el); return parseFloat(s.lineHeight)/parseFloat(s.fontSize); });
+ expect(rhythm).toBeCloseTo(1.25, 2);
+ await context.close();
 });

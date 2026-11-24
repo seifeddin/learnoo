@@ -17,3 +17,7 @@ Work on an assigned issue or explicitly requested scope. Read its dependencies a
 The selected stack is Go for the backend and server-rendered reader, PostgreSQL for persistence, and React/TypeScript with TipTap for Studio. Begin math rendering with locally hosted browser-side KaTeX. A local renderer experiment exists; read docs/DEVELOPMENT.md for verified setup and test commands. It is not the authenticated application. Do not expose the experiment publicly.
 
 Create a feature branch from develop and use pull requests. Follow CONTRIBUTING.md for maintainer exceptions. The exception for repository maintenance does not relax the application's rule that educational authors cannot approve their own lessons.
+
+## Agent skills
+
+Project skills live in [.agents/skills/](.agents/skills/); Claude Code accesses the same files through `.claude/skills`. Use `learnoo-editorial-invariants` for revision/workflow changes, `learnoo-security` for trust-boundary changes, and `learnoo-code-review` for reviews. Load only applicable skills; their checklists support, rather than replace, project requirements and enforced safeguards. Optional external UI guidance is listed in [RECOMMENDED_SKILLS.md](.agents/RECOMMENDED_SKILLS.md); do not vendor it or infer new product scope from it.

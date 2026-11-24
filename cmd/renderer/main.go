@@ -20,7 +20,7 @@ func handler() http.Handler {
 	mux := http.NewServeMux()
 	assets, _ := fs.Sub(rendering.Files, "static")
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.FS(assets))))
-	for route, name := range map[string]string{"/": "complex-numbers", "/lesson": "complex-numbers", "/bidi": "bidi", "/failure": "failure"} {
+	for route, name := range map[string]string{"/lesson": "complex-numbers", "/bidi": "bidi", "/failure": "failure"} {
 		mux.HandleFunc("GET "+route, func(w http.ResponseWriter, r *http.Request) {
 			if r.URL.Path != route {
 				http.NotFound(w, r)
@@ -34,6 +34,19 @@ func handler() http.Handler {
 			render(w, doc)
 		})
 	}
+	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.NotFound(w, r)
+			return
+		}
+		data, err := rendering.Files.ReadFile("static/landing.html")
+		if err != nil {
+			http.Error(w, "Preview unavailable", http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Write(data)
+	})
 	mux.HandleFunc("GET /lab", func(w http.ResponseWriter, r *http.Request) {
 		data, _ := rendering.Files.ReadFile("static/lab.html")
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")

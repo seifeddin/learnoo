@@ -28,3 +28,6 @@ coverage/
 internal/rendering/static/vendor/
 playwright-report/
 test-results/
+
+# Local third-party visual reference exports; not build inputs
+web/design/refero-udemy/

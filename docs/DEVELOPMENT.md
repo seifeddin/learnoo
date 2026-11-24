@@ -19,6 +19,7 @@ go run ./cmd/renderer
 
 Open http://127.0.0.1:8080/lesson. Change the local port with `go run ./cmd/renderer -port 8081`.
 
+- `/`: landing-page UI example; local only, no registration or publication.
 - `/lesson`: unreviewed French complex-numbers fixture.
 - `/bidi`: isolated Arabic/French directionality fixture.
 - `/failure`: intentionally invalid formula with readable fallback.
@@ -29,9 +30,15 @@ Browser-side KaTeX is copied from the pinned npm package and served locally with
 
 The JSON laboratory is not TipTap. No server-side draft storage or approval behavior is simulated. See [fixture details](fixtures/README.md).
 
+## Design foundations
+
+The reader consumes generated design tokens. Edit `web/design/tokens.json`, run `npm run design:build`, and rebuild the Go server. See [shared design exports](../web/design/README.md) for plain CSS and future Tailwind v4 Studio integration.
+
 ## Verify
 
 ```sh
+npm run design:check
+npm run design:contrast
 go test ./...
 go vet ./...
 npx playwright install chromium
@@ -39,7 +46,7 @@ npm run test:browser
 go test ./internal/rendering -run '^$' -bench BenchmarkRenderLesson -benchmem
 ```
 
-Playwright starts a loopback server automatically (or reuses an existing local server outside CI). Results and screenshots are written to ignored `test-results/`. Run `npm run assets` before compiling: Go embeds the prepared local browser assets into the binary.
+Playwright always starts its own loopback server on port 18080 and refuses to reuse an existing process, in development and CI alike. Set `LEARNOO_TEST_PORT=18081` to select another port. Tests derive URLs and request-origin checks from this configuration; the interactive preview on 8080 is independent. Results and screenshots are written to ignored `test-results/`. Run `npm run assets` before compiling: Go embeds the prepared local browser assets into the binary.
 
 For a restricted environment, put the Go build cache in a writable temporary directory by prefixing commands with `GOCACHE=/tmp/learnoo-go-cache`.
 

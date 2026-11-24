@@ -10,6 +10,14 @@ Use focused branches and pull requests. Describe the problem, resulting behavior
 
 Tests should cover meaningful risks: authorization, submitted-content immutability, publication races, lesson withdrawal, rendering safety, and recovery. Avoid broad scaffolding or unrelated dependencies. Document runnable setup when the prototype exists.
 
+## Agent skills
+
+Canonical skills are in [.agents/skills/](.agents/skills/). `.claude/skills` is a relative symlink to `../.agents/skills`, so both tools read one maintained copy. Windows contributors may need Developer Mode or other symlink permissions and Git symlink support enabled before checkout; verify this path is a directory link, not a text file. Do not maintain duplicate copies.
+
+Discovery paths were checked against the [Codex skills docs](https://developers.openai.com/codex/skills/) and [Claude Code skills docs](https://code.claude.com/docs/en/skills) on 2026-11-23. Codex documents `.agents/skills`; Claude Code documents `.claude/skills` and symlinked skill folders. On 2026-11-23, the maintainer relayed a Claude Code session report that all three `learnoo-*` skills appeared while using this branch, confirming discovery through the parent-directory symlink in that session (client version not supplied). Filesystem resolution is also verified. Codex reads the canonical directory directly; appearance in its skill selector remains unverified. Check the skills in your client before relying on automatic selection; if missing, read the canonical files explicitly and report the client/version. Discovery does not prove that a skill was invoked or followed correctly.
+
+Optional UI/UX skills and pinned upstream licenses are listed in [recommended skills](.agents/RECOMMENDED_SKILLS.md). The shared skills grant no additional tool permissions or merge authority.
+
 ## Educational workflow
 
 Teachers will use Studio, not GitHub. Content must have a curriculum objective, clear explanation, sources/rights information, and a different qualified reviewer. AI-generated material is subject to the same review requirements.

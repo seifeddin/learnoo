@@ -1,7 +1,17 @@
 {
   "name": "learnoo-renderer-prototype",
   "private": true,
-  "scripts": {"assets": "node scripts/copy-katex.mjs", "test:browser": "playwright test"},
-  "dependencies": {"katex": "0.19.1"},
-  "devDependencies": {"@playwright/test": "1.65.1"}
+  "scripts": {
+    "assets": "npm run design:build && node scripts/copy-katex.mjs",
+    "test:browser": "playwright test",
+    "design:build": "node scripts/build-design.mjs",
+    "design:check": "node scripts/build-design.mjs --check",
+    "design:contrast": "node scripts/check-contrast.mjs"
+  },
+  "dependencies": {
+    "katex": "0.19.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
 }

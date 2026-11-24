@@ -1,13 +1,14 @@
 // TipTap schema for the Studio. Each node maps 1:1 to a restricted lesson node
 // (see adapter.ts); nothing here can represent content the Go renderer rejects
 // except empty values, which the adapter reports before saving.
-import { InputRule, Mark, Node, mergeAttributes, type AnyExtension } from '@tiptap/core';
+import { InputRule, Mark, Node, mergeAttributes, type AnyExtension, type NodeViewRenderer } from '@tiptap/core';
 import Bold from '@tiptap/extension-bold';
 import Document from '@tiptap/extension-document';
 import Text from '@tiptap/extension-text';
 import { BulletList, ListItem } from '@tiptap/extension-list';
 import { Gapcursor, TrailingNode, UndoRedo } from '@tiptap/extensions';
 import { ALLOWED_IMAGES, YOUTUBE_ID, type Dir, type Lang } from './lesson';
+import { paintFormula } from '../math';
 
 export const asLang = (value: string | null | undefined): Lang | null => (value === 'fr' || value === 'ar' ? value : null);
 export const asDir = (value: string | null | undefined): Dir | null => (value === 'ltr' || value === 'rtl' || value === 'auto' ? value : null);
@@ -17,6 +18,37 @@ export function texFrom(el: HTMLElement): string {
   const annotation = el.querySelector('annotation[encoding="application/x-tex"]');
   return (el.getAttribute('data-latex') ?? annotation?.textContent ?? el.textContent ?? '').trim();
 }
+
+/**
+ * Editor view of a formula: typeset with KaTeX, or its TeX flagged as an error.
+ * Only the view changes; the node still stores and exports the TeX source, and
+ * renderHTML (used for copy) is unchanged.
+ */
+const formulaView = (display: boolean): NodeViewRenderer => ({ node }) => {
+  const dom = document.createElement(display ? 'div' : 'span');
+  dom.dataset.type = display ? 'display-math' : 'inline-math';
+  dom.className = display ? 'studio-math-block' : 'studio-math';
+  dom.dir = 'ltr';
+  dom.contentEditable = 'false';
+  let tex = String(node.attrs.latex);
+  dom.dataset.latex = tex;
+  paintFormula(dom, tex, display);
+  return {
+    dom,
+    update: (next) => {
+      if (next.type !== node.type) return false;
+      const nextTex = String(next.attrs.latex);
+      if (nextTex !== tex) {
+        tex = nextTex;
+        dom.dataset.latex = tex;
+        paintFormula(dom, tex, display);
+      }
+      return true;
+    },
+    // KaTeX owns the markup inside; ProseMirror must not read it back as content.
+    ignoreMutation: () => true,
+  };
+};
 
 const langAttributes = () => ({
   lang: { default: null, parseHTML: (el: HTMLElement) => asLang(el.getAttribute('lang')), renderHTML: (a: { lang: Lang | null }) => (a.lang ? { lang: a.lang } : {}) },
@@ -91,6 +123,7 @@ export const InlineMath = Node.create({
   ],
   renderHTML: ({ node }) => ['span', { 'data-type': 'inline-math', 'data-latex': node.attrs.latex, class: 'studio-math', dir: 'ltr', title: 'Formule (TeX)' }, node.attrs.latex || '∅'],
   renderText: ({ node }) => `$${node.attrs.latex}$`,
+  addNodeView: () => formulaView(false),
   addInputRules() {
     // Typing $…$ (not $$) turns the TeX into an inline formula.
     return [
@@ -120,6 +153,7 @@ export const DisplayMath = Node.create({
     { tag: '.katex-display', getAttrs: (el: HTMLElement) => ({ latex: texFrom(el) }) },
   ],
   renderHTML: ({ node }) => ['div', { 'data-type': 'display-math', 'data-latex': node.attrs.latex, class: 'studio-math-block', dir: 'ltr' }, node.attrs.latex || '∅ formule vide'],
+  addNodeView: () => formulaView(true),
   addInputRules() {
     // "$$ " at the start of an empty paragraph inserts a display formula.
     return [

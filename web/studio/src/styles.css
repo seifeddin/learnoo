@@ -13,7 +13,8 @@ body {
   line-height: var(--learnoo-leading-body);
 }
 
-:lang(ar) { font-family: var(--learnoo-font-arabic); line-height: var(--learnoo-leading-arabic); letter-spacing: normal; }
+/* Formulas keep KaTeX's fonts, as in the reader; :where() keeps this rule's specificity unchanged. */
+:lang(ar):where(:not(.katex, .katex *)) { font-family: var(--learnoo-font-arabic); line-height: var(--learnoo-leading-arabic); letter-spacing: normal; }
 
 .studio-header { padding: var(--learnoo-space-4); background: var(--learnoo-color-surface); border-block-end: 1px solid var(--learnoo-color-border); }
 .brand { margin: 0; font-weight: var(--learnoo-weight-heading); letter-spacing: 0.08em; }
@@ -75,11 +76,17 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .studio-editor:focus-visible { outline-offset: -3px; }
 .studio-editor h2 { font-size: var(--learnoo-text-heading); }
 .studio-editor .studio-lang[lang='ar'] { background: var(--learnoo-color-accent-soft); }
-.studio-math, .studio-math-block { font-family: var(--learnoo-font-mono); font-size: 0.9em; background: var(--learnoo-color-surface-subtle); border: 1px dashed var(--learnoo-color-control-border); border-radius: 4px; unicode-bidi: isolate; }
+/* Formulas are typeset by KaTeX (src/math.ts); the dashed frame marks them as editable atoms. */
+.studio-math, .studio-math-block { background: var(--learnoo-color-surface-subtle); border: 1px dashed var(--learnoo-color-control-border); border-radius: 4px; unicode-bidi: isolate; }
 .studio-math { padding-inline: 0.25em; }
 /* Long formulas scroll inside their block, as in the reader (beats ProseMirror's atom white-space rule). */
-.studio-editor .studio-math-block { white-space: pre; overflow-wrap: normal; }
-.studio-math-block { display: block; padding: var(--learnoo-space-2); margin-block: var(--learnoo-space-2); overflow-x: auto; white-space: pre; text-align: start; }
+.studio-editor .studio-math-block { white-space: normal; overflow-wrap: normal; }
+.studio-math-block { display: block; padding: var(--learnoo-space-2); margin-block: var(--learnoo-space-2); overflow-x: auto; text-align: start; }
+.studio-math-block .katex-display { margin: 0; }
+/* Empty and invalid formulas show their TeX, like the reader's .math-error. */
+.studio-math.math-empty, .studio-math-block.math-empty, .studio-math.math-error, .studio-math-block.math-error { font-family: var(--learnoo-font-mono); font-size: 0.9em; }
+.studio-editor .studio-math-block.math-empty, .studio-editor .studio-math-block.math-error { white-space: pre; }
+.math-error { color: var(--learnoo-color-danger); background: var(--learnoo-color-danger-soft); border-color: var(--learnoo-color-danger); }
 .studio-callout, .studio-exercise, .studio-solution, .studio-video, .studio-image { margin-block: var(--learnoo-space-3); padding: var(--learnoo-space-2) var(--learnoo-space-3); border-inline-start: 4px solid var(--learnoo-color-brand); background: var(--learnoo-color-surface-subtle); border-radius: 4px; }
 .studio-exercise { border-inline-start-color: var(--learnoo-color-success-text); }
 .studio-solution { background: var(--learnoo-color-surface); border-inline-start-color: var(--learnoo-color-muted); }
@@ -96,6 +103,11 @@ button:disabled { opacity: 0.55; cursor: not-allowed; }
 .inspector label { display: grid; gap: var(--learnoo-space-1); }
 .inspector .row { display: grid; gap: var(--learnoo-space-2); grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); }
 .tex { font-family: var(--learnoo-font-mono); }
+.tex-preview { min-height: 2.5rem; }
+.tex-preview .hint { margin: 0; }
+.tex-rendered { overflow-x: auto; padding: var(--learnoo-space-2); background: var(--learnoo-color-surface-subtle); border-radius: 4px; unicode-bidi: isolate; }
+.tex-rendered .katex-display { margin: 0; }
+.tex-error { margin: 0; color: var(--learnoo-color-danger); overflow-wrap: anywhere; }
 
 .actions { display: flex; flex-wrap: wrap; gap: var(--learnoo-space-2); }
 .status { margin: var(--learnoo-space-3) 0 0; }

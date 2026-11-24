@@ -114,6 +114,10 @@ test('Studio is usable at phone width and in an Arabic document', async ({ page 
   await page.goto(studioURL);
   await loadExample(page, 'Test arabe/français (RTL)');
   await expect(page.locator('.editor-frame')).toHaveAttribute('dir', 'rtl');
+  // Formulas are typeset in the editor with KaTeX's fonts, not the Arabic text font.
+  const formula = page.getByRole('textbox', { name: 'Contenu de la leçon' }).locator('[data-type="inline-math"] .katex').first();
+  await expect(formula).toBeVisible();
+  expect(await formula.evaluate((el) => getComputedStyle(el).fontFamily)).toContain('KaTeX');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: 'test-results/studio-mobile-rtl.png', fullPage: true });
   await page.setViewportSize({ width: 1440, height: 1000 });

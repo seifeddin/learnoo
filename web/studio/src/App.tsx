@@ -1,4 +1,4 @@
-import { useCallback, useId, useRef, useState, type ChangeEvent } from 'react';
+import { useCallback, useId, useMemo, useRef, useState, type ChangeEvent } from 'react';
 import { EditorContent, useEditor, useEditorState, type Editor } from '@tiptap/react';
 import { NodeSelection } from '@tiptap/pm/state';
 import { lessonExtensions } from './schema/extensions';
@@ -8,6 +8,7 @@ import { ALLOWED_IMAGES, LessonError, YOUTUBE_ID, serializeLesson, type LessonDo
 import { describePaste, sanitizePastedHTML } from './schema/paste';
 import { reopenDraft, saveDraft } from './schema/storage';
 import { FIXTURES } from './fixtures';
+import { renderTex } from './math';
 
 type Status = { text: string; error?: boolean };
 
@@ -329,6 +330,26 @@ function findAtomBefore(editor: Editor, pos: number, type: string): number | nul
   return found;
 }
 
+/** TeX textarea with a live typeset preview, or the TeX error, rendered as the reader does. */
+export function FormulaField({ label, tex, display, onChange }: { label: string; tex: string; display: boolean; onChange: (value: string) => void }) {
+  const id = useId();
+  const result = useMemo(() => (tex === '' ? null : renderTex(tex, display)), [tex, display]);
+  const invalid = result !== null && !result.ok;
+  return (
+    <>
+      <label>
+        {label}
+        <textarea className="tex" dir="ltr" rows={2} maxLength={2000} value={tex} aria-invalid={invalid} aria-describedby={`${id}-preview`} onChange={(e) => onChange(e.target.value)} />
+      </label>
+      <div id={`${id}-preview`} className="tex-preview" aria-live="polite">
+        {result === null && <p className="hint">Saisissez une formule TeX ; l’aperçu s’affiche ici.</p>}
+        {result?.ok && <div className="tex-rendered" dir="ltr" dangerouslySetInnerHTML={{ __html: result.html }} />}
+        {result && !result.ok && <p className="tex-error">{result.error}</p>}
+      </div>
+    </>
+  );
+}
+
 /** Properties of the selected formula, media or container, and of the current block. */
 function Inspector({ editor }: { editor: Editor }) {
   const ctx = useEditorState({
@@ -356,10 +377,12 @@ function Inspector({ editor }: { editor: Editor }) {
     <fieldset className="inspector">
       <legend>Propriétés de la sélection</legend>
       {atom && (atom.type === 'inlineMath' || atom.type === 'displayMath') && (
-        <label>
-          {atom.type === 'inlineMath' ? 'Formule en ligne (TeX)' : 'Formule centrée (TeX)'}
-          <textarea className="tex" dir="ltr" rows={2} maxLength={2000} value={String(atom.attrs.latex)} onChange={(e) => set(atom.pos, 'latex', e.target.value)} />
-        </label>
+        <FormulaField
+          label={atom.type === 'inlineMath' ? 'Formule en ligne (TeX)' : 'Formule centrée (TeX)'}
+          tex={String(atom.attrs.latex)}
+          display={atom.type === 'displayMath'}
+          onChange={(value) => set(atom.pos, 'latex', value)}
+        />
       )}
       {atom?.type === 'image' && (
         <>

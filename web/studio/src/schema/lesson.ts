@@ -62,6 +62,8 @@ export function parseLesson(source: string): LessonDocument {
   }
   const duplicate = findDuplicateKey(source);
   if (duplicate !== null) throw new LessonError(`Clé en double : ${duplicate}.`);
+  const literal = checkLiterals(source);
+  if (literal !== null) throw new LessonError(literal);
   if (!isRecord(raw)) throw new LessonError('Le document doit être un objet JSON.');
   for (const key of Object.keys(raw)) {
     if (!DOCUMENT_KEYS.includes(key)) throw new LessonError(`Champ inconnu dans le document : ${key}.`);
@@ -198,6 +200,32 @@ export function findDuplicateKey(source: string): string | null {
       const key = JSON.parse(source.slice(start, i + 1)) as string;
       if (keys.has(key)) return key;
       keys.add(key);
+    }
+  }
+  return null;
+}
+
+const PLAIN_INTEGER = /^-?(0|[1-9][0-9]*)$/;
+
+/**
+ * Rejects null anywhere and numbers not spelled as plain integers, matching
+ * checkLiterals in internal/rendering/render.go. JSON.parse reads 1.0, 1e0 and
+ * 1.00000000000000001 as 1, so the spelling is checked on the source text.
+ * Call only on text JSON.parse accepted; returns a message or null.
+ */
+export function checkLiterals(source: string): string | null {
+  for (let i = 0; i < source.length; i++) {
+    const ch = source[i];
+    if (ch === '"') {
+      for (i++; source[i] !== '"'; i++) if (source[i] === '\\') i++;
+    } else if (ch === 'n') {
+      return 'La valeur null n’est pas autorisée.';
+    } else if (ch === '-' || (ch >= '0' && ch <= '9')) {
+      let j = i;
+      while (j < source.length && '+-.0123456789eE'.includes(source[j])) j++;
+      const number = source.slice(i, j);
+      if (!PLAIN_INTEGER.test(number)) return `Le nombre ${number} doit être un entier écrit simplement.`;
+      i = j - 1;
     }
   }
   return null;
